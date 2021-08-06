@@ -7,8 +7,8 @@ import './desing/global.css';
 import './desing/reset.css';
 
 ReactDOM.render(
-<React.StrictMode>
+  <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

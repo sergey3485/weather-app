@@ -1,0 +1,26 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true,
+    "jest":true
+  },
+  "plugins": ["react", "@typescript-eslint", "jest"],
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:jest/recommended"
+  ],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "arrow-body-style": "off"
+  }
+}
