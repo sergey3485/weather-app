@@ -5,22 +5,29 @@
     "ecmaFeatures": {
       "jsx": true
     },
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "env": {
     "browser": true,
-    "jest":true
+    "jest": true
   },
-  "plugins": ["react", "@typescript-eslint", "jest"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "jest"
+  ],
   "extends": [
     "airbnb-typescript",
     "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:jest/recommended"
   ],
   "rules": {
-    "import/prefer-default-export": "off",
     "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
     "arrow-body-style": "off"
   }
 }
