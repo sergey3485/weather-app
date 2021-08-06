@@ -1,0 +1,12 @@
+body {
+  font-family: "Roboto";
+  font-size: 16px;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+
+  color: white;
+  background-color: rgb(83, 36, 224);
+}
