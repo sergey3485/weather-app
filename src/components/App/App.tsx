@@ -12,6 +12,7 @@ export const App = (): JSX.Element => {
 
   const output = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // eslint-disable-next-line no-console
     console.log(text);
     setText('');
   };

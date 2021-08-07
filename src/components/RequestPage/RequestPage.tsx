@@ -6,7 +6,7 @@ export interface RequestPageProps {
   onSubmitOutput: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export const RequestPage = (props: RequestPageProps) => {
+export const RequestPage = (props: RequestPageProps): JSX.Element => {
   const { text, onChangeText, onSubmitOutput } = props;
 
   return (
