@@ -11,7 +11,9 @@ export const App = (): JSX.Element => {
   };
 
   const output = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     console.log(text);
+    setText('');
   };
 
   return (
