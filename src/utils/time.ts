@@ -1,3 +1,7 @@
+export interface FullDate {
+  time: string;
+  date: string;
+}
 const getCurrentTime = ():string => {
   const date = new Date();
   const hour = date.getHours();
@@ -19,7 +23,7 @@ const getCurrentDate = ():string => {
   return (dateFormat.format(date));
 };
 
-export const getFullDate = () => {
+export const getFullDate = ():FullDate => {
   return {
     time: getCurrentTime(),
     date: getCurrentDate(),

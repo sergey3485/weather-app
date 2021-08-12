@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { getFullDate } from '../../utils/time';
+import { getFullDate, FullDate } from '../../utils/time';
 import './dateTodo.css';
 
 export const DateTodo = (): JSX.Element => {
-  const [fullDate, setFullDate] = React.useState(getFullDate());
+  const [fullDate, setFullDate] = React.useState<FullDate>(getFullDate());
 
   React.useEffect(() => {
     const timer = setInterval(() => { setFullDate(getFullDate()); }, 1000);
@@ -11,8 +11,6 @@ export const DateTodo = (): JSX.Element => {
       clearInterval(timer);
     };
   }, []);
-
-  console.log(fullDate);
 
   return (
     <div className="container-date-todo">
