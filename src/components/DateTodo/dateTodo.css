@@ -1,0 +1,27 @@
+.date-time {
+  font-size: 40px;
+}
+
+.date-day {
+  font-size: 32px;
+}
+
+.button-next {
+  border:none;
+  background: none;
+  color: white;
+  font-size: 28px;
+  margin-top: 48px;
+}
+
+.todo-item {
+  display: flex;
+}
+
+.todo-text {
+  margin-left: 24px;
+}
+.todo-item {
+  font-size: 24px;
+  margin-top: 24px;
+}
