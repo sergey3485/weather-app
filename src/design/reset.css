@@ -10,6 +10,6 @@ body {
 }
 
 html {
-cursor: default;
--webkit-tap-highlight-color: transparent;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
 }
