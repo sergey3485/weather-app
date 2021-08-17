@@ -6,9 +6,8 @@ const getCurrentTime = ():string => {
   const date = new Date();
   const hour = date.getHours();
   const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
 
-  return `${hour > 9 ? hour : `0${hour}`}:${minutes > 9 ? minutes : `0${minutes}`}:${seconds > 9 ? seconds : `0${seconds}`}`;
+  return `${hour > 9 ? hour : `0${hour}`}:${minutes > 9 ? minutes : `0${minutes}`}`;
 };
 
 const getCurrentDate = ():string => {

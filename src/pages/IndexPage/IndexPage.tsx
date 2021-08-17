@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './indexPage.css';
 
 export const IndexPage = (): JSX.Element => {
+  // const { text, output, changeText } = usePost();
   const history = useHistory();
   const [text, setText] = React.useState('');
 
@@ -15,7 +16,6 @@ export const IndexPage = (): JSX.Element => {
   const output = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // eslint-disable-next-line no-console
-    console.log(text);
     setText('');
     history.push(`/${text}`);
   };
