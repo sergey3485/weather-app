@@ -47,7 +47,7 @@ interface Request {
 }
 
 interface Weather {
-  astronomy: Array<Astronomy>;
+  astronomy: Astronomy[];
   avgtempC: string;
   avgtempF: string;
   date: string;
@@ -96,7 +96,7 @@ interface Hourly {
   chanceofwindy: string;
   cloudcover: string;
   humidity: string;
-  lang_ru: Array<StandartObject>;
+  lang_ru: StandartObject[];
   precipInches: string;
   precipMM: string;
   pressure: string;
@@ -108,8 +108,8 @@ interface Hourly {
   visibility: string;
   visibilityMiles: string;
   weatherCode: string;
-  weatherDesc: Array<StandartObject>;
-  weatherIconUrl: Array<StandartObject>;
+  weatherDesc: StandartObject[];
+  weatherIconUrl: StandartObject[];
   winddir16Point: string;
   winddirDegree: string;
   windspeedKmph: string;
@@ -120,7 +120,7 @@ export interface UsefullData {
   position: string;
   temperature: string;
   weatherDescription: string;
-  hour: Array<Hourly>;
+  hour: Hourly[];
 }
 
 export const fetchWeather = (text: string): Promise<UsefullData> => {
