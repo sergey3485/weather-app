@@ -15,9 +15,9 @@ export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
       <div className="weather-logo">
         <img src={iconParth} alt="weather" className="logo" />
       </div>
-      <div className="weather">{weatherDescription}</div>
+      <div className="weather"><strong>{weatherDescription}</strong></div>
       <div className="location">{location}</div>
-      <div className="temperature">{`${temperature}°`}</div>
+      <div className="temperature"><strong>{`${temperature}°`}</strong></div>
     </div>
   );
 };

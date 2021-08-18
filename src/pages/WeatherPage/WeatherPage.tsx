@@ -29,7 +29,11 @@ export const WeatherPage = (): JSX.Element => {
           weatherDescription={weather?.weatherDescription}
         />
       </div>
-      <WeekList />
+      <div className="hourly-weather-container">
+        { weather?.hour.map((data) => (
+          <WeekList key={data.time} hourly={data.tempC} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -120,6 +120,7 @@ export interface UsefullData {
   position: string;
   temperature: string;
   weatherDescription: string;
+  hour: Hourly[];
 }
 
 export const fetchWeather = (text: string): Promise<UsefullData> => {
@@ -128,15 +129,24 @@ export const fetchWeather = (text: string): Promise<UsefullData> => {
   const weatherData = fetch(url)
     .then((data) => data.json())
     .then((data: FetchedWeather): UsefullData => {
+      const hourlyArray = () => {
+        const array = [];
+        for (let i = 0; i < 8; i += 1) {
+          array[i] = data.weather[0].hourly[i];
+        }
+        return array;
+      };
+
       const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`;
+      const hourly = hourlyArray();
+
       return {
         position: loc,
         temperature: data.current_condition[0].temp_C,
         weatherDescription: data.current_condition[0].weatherDesc[0].value,
+        hour: hourly,
       };
     });
-    // eslint-disable-next-line no-console
-    // .catch((error) => );
 
   return weatherData;
 };

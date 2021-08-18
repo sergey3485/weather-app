@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getFullDate, FullDate } from '../../utils/time';
+import { FullDate, getFullDate } from '../../utils/time';
 
 import './dateTodo.css';
 
@@ -16,7 +16,10 @@ export const DateTodo = (): JSX.Element => {
 
   return (
     <div className="container-date-todo">
-      <div className="date-time">{fullDate.time}</div>
+      <div className="date-time">
+        <span><strong>{fullDate.time}</strong></span>
+        <span className="time-index"><strong>{fullDate.index}</strong></span>
+      </div>
       <div className="date-day">{fullDate.date}</div>
       <div className="todo-container">
         <button className="button-next" type="button">Next</button>

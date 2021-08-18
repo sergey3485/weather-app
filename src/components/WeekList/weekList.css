@@ -1,13 +1,14 @@
 .week-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+  padding: 8px 24px;
+  flex-direction: column;
+  -webkit-box-align: center;
   align-items: center;
-  margin-top: auto;
+  display: flex;
+  min-width: 160px;
 }
 .day-container {
   border-radius: 8%;
-  width: 192px;
+  width: 144px;
   display: flex;
   flex-direction: column;
   justify-items: center;

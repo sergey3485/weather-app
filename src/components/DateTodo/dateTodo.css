@@ -1,9 +1,12 @@
 .date-time {
   font-size: 24px;
 }
+.time-index {
+  font-size: 16px;
+}
 
 .date-day {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .button-next {
