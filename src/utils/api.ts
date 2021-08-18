@@ -124,7 +124,7 @@ export interface UsefullData {
 }
 
 export const fetchWeather = (text: string): Promise<UsefullData> => {
-  const url = `http://wttr.in/${text}?format=j1`;
+  const url = `https://wttr.in/${text}?format=j1`;
 
   const weatherData = fetch(url)
     .then((data) => data.json())
