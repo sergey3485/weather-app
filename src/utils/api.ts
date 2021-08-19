@@ -118,6 +118,7 @@ interface Hourly {
 
 export interface UsefullData {
   position: string;
+  icon: string;
   temperature: string;
   weatherDescription: string;
   hour: Hourly[];
@@ -142,6 +143,7 @@ export const fetchWeather = (text: string): Promise<UsefullData> => {
 
       return {
         position: loc,
+        icon: data.current_condition[0].weatherCode,
         temperature: data.current_condition[0].temp_C,
         weatherDescription: data.current_condition[0].weatherDesc[0].value,
         hour: hourly,

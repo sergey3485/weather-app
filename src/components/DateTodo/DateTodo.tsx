@@ -8,7 +8,7 @@ export const DateTodo = (): JSX.Element => {
   const [fullDate, setFullDate] = React.useState<FullDate>(getFullDate());
 
   React.useEffect(() => {
-    const timer = setInterval(() => { setFullDate(getFullDate()); }, 1000);
+    const timer = setInterval(() => { setFullDate(getFullDate()); }, 10000);
     return () => {
       clearInterval(timer);
     };

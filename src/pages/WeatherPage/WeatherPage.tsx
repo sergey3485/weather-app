@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { LocationWeather } from '../../components/LocationWeather/LocationWeather';
 import { DateTodo } from '../../components/DateTodo/DateTodo';
 import { WeekList } from '../../components/WeekList/WeekList';
+import { code } from '../../weather-icons/index';
 
 import { fetchWeather, UsefullData } from '../../utils/api';
 
@@ -27,11 +28,12 @@ export const WeatherPage = (): JSX.Element => {
           location={weather?.position}
           temperature={weather?.temperature}
           weatherDescription={weather?.weatherDescription}
+          iconPath={code[weather?.icon ?? '113']}
         />
       </div>
       <div className="hourly-weather-container">
         { weather?.hour.map((data) => (
-          <WeekList key={data.time} hourly={data.tempC} />
+          <WeekList key={data.time} hourly={data.tempC} iconPath={code[data.weatherCode]} />
         ))}
       </div>
     </div>

@@ -1,19 +1,26 @@
-import iconParth from '../../weather-icons/wi-day-sunny.svg';
-
 import './locationWeather.css';
 
 export interface LocationWeatherProps {
   location?: string;
   temperature?: string;
   weatherDescription?: string;
+  iconPath: string;
 }
 
 export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
-  const { location = 'loading', temperature = 'loading', weatherDescription = 'loading' } = props;
+  const {
+    location = 'loading',
+    temperature = 'loading',
+    weatherDescription = 'loading',
+    iconPath,
+  } = props;
   return (
     <div className="container-weather">
       <div className="weather-logo">
-        <img src={iconParth} alt="weather" className="logo" />
+        <img src={iconPath} alt="weather" className="logo" />
+        {// eslint-disable-next-line no-console
+        console.log(iconPath)
+        }
       </div>
       <div className="weather"><strong>{weatherDescription}</strong></div>
       <div className="location">{location}</div>
