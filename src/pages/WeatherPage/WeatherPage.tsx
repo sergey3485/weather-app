@@ -7,6 +7,7 @@ import { WeekList } from '../../components/WeekList/WeekList';
 import { code } from '../../weather-icons/index';
 
 import { fetchWeather, UsefullData } from '../../utils/api';
+import { timeCode } from '../../utils/time';
 
 import './weatherPage.css';
 
@@ -33,7 +34,12 @@ export const WeatherPage = (): JSX.Element => {
       </div>
       <div className="hourly-weather-container">
         { weather?.hour.map((data) => (
-          <WeekList key={data.time} hourly={data.tempC} iconPath={code[data.weatherCode]} />
+          <WeekList
+            key={data.time}
+            hourly={data.tempC}
+            iconPath={code[data.weatherCode]}
+            timeCode={timeCode[data.time]}
+          />
         ))}
       </div>
     </div>

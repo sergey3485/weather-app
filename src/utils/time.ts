@@ -40,3 +40,43 @@ export const getFullDate = ():FullDate => {
     date: getCurrentDate(),
   };
 };
+
+export interface TimeCode {
+  time: string;
+  index: string;
+}
+
+export const timeCode: Record<string, TimeCode> = {
+  0: {
+    time: '12:00',
+    index: 'AM',
+  },
+  300: {
+    time: '03:00',
+    index: 'AM',
+  },
+  600: {
+    time: '06:00',
+    index: 'AM',
+  },
+  900: {
+    time: '09:00',
+    index: 'AM',
+  },
+  1200: {
+    time: '12:00',
+    index: 'PM',
+  },
+  1500: {
+    time: '03:00',
+    index: 'PM',
+  },
+  1800: {
+    time: '06:00',
+    index: 'PM',
+  },
+  2100: {
+    time: '09:00',
+    index: 'PM',
+  },
+};
