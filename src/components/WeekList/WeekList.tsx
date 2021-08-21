@@ -1,20 +1,21 @@
+import { getCurrentHour } from '../../utils/time';
 import './weekList.css';
-import { TimeCode } from '../../utils/time';
 
 export interface WeekListProps {
   hourly: string;
   iconPath: string;
-  timeCode: TimeCode;
+  timeCode: Date;
 }
 
 export const WeekList = (props: WeekListProps): JSX.Element => {
   const { hourly, iconPath, timeCode } = props;
+  const time = getCurrentHour(timeCode);
   return (
     <div className="week-container">
       <div className="day-container">
         <div className="day">
-          <span>{timeCode.time}</span>
-          <span className="time-index">{` ${timeCode.index}`}</span>
+          <span>{time.value}</span>
+          <span className="time-index">{` ${time.index}`}</span>
         </div>
         <div className="day-icon">
           <img src={iconPath} alt="weather" className="icon" />

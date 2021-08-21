@@ -2,7 +2,7 @@ export interface FetchedWeather {
   current_condition: [CurrentCondition];
   nearest_area: [NearestArea];
   request: [Request];
-  weather: [Weather];
+  weather: Weather[];
 }
 
 interface CurrentCondition {
@@ -73,7 +73,7 @@ interface Astronomy {
   sunset: string;
 }
 
-interface Hourly {
+export interface Hourly {
   DewPointC: string;
   DewPointF: string;
   FeelsLikeC: string;
@@ -103,7 +103,7 @@ interface Hourly {
   pressureInches: string;
   tempC: string;
   tempF: string;
-  time: string;
+  time: string | Date;
   uvIndex: string;
   visibility: string;
   visibilityMiles: string;
@@ -124,6 +124,17 @@ export interface UsefullData {
   hour: Hourly[];
 }
 
+const changeTime = (weather:Weather):Hourly[] => {
+  const changedArray = [];
+  const gap = 3 * 60 * 60 * 1000;
+  const date = new Date(weather.date);
+  for (let i = 0; i < weather.hourly.length; i += 1) {
+    changedArray[i] = weather.hourly[i];
+    changedArray[i].time = new Date(+date + (gap * i));
+  }
+  return changedArray;
+};
+
 export const fetchWeather = (text: string): Promise<UsefullData> => {
   const url = `https://wttr.in/${text}?format=j1`;
 
@@ -131,11 +142,7 @@ export const fetchWeather = (text: string): Promise<UsefullData> => {
     .then((data) => data.json())
     .then((data: FetchedWeather): UsefullData => {
       const hourlyArray = () => {
-        const array = [];
-        for (let i = 0; i < 8; i += 1) {
-          array[i] = data.weather[0].hourly[i];
-        }
-        return array;
+        return [...changeTime(data.weather[0]), ...changeTime(data.weather[1])];
       };
 
       const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`;
