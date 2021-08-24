@@ -18,6 +18,8 @@
 .hourly-weather-container{
   margin-top: auto;
   -webkit-box-pack: center;
-  justify-content: center;
   display: flex;
+  overflow: auto;
+  scrollbar-color: white royalblue;
 }
+

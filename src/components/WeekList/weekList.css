@@ -1,12 +1,12 @@
 .week-container {
-  padding: 8px 24px;
   flex-direction: column;
   -webkit-box-align: center;
   align-items: center;
   display: flex;
-  min-width: 160px;
 }
 .day-container {
+  min-width: 160px;
+  padding: 8px 24px;
   border-radius: 8%;
   width: 144px;
   display: flex;
