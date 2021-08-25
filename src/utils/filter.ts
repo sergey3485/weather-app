@@ -1,6 +1,6 @@
-import { Hourly } from './api';
+import { HourlyWeather } from './api';
 
-export const filter = (data:Hourly[]) => {
+export const filterHourlyWeather = (data: HourlyWeather[]) => {
   const currentDate = new Date();
   const filtredArray = data.filter((date) => +date.time >= +currentDate);
 

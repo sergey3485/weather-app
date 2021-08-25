@@ -2,7 +2,7 @@ export interface FetchedWeather {
   current_condition: [CurrentCondition];
   nearest_area: [NearestArea];
   request: [Request];
-  weather: Weather[];
+  weather: DailyWeather[];
 }
 
 interface CurrentCondition {
@@ -10,7 +10,7 @@ interface CurrentCondition {
   FeelsLikeF: string;
   cloudcover: string;
   humidity: string;
-  lang_ru: [StandartObject];
+  lang_ru: [WeatherStandartObject];
   localObsDateTime: string;
   observation_time: string;
   precipInches: string;
@@ -23,8 +23,8 @@ interface CurrentCondition {
   visibility: string;
   visibilityMiles: string;
   weatherCode: string;
-  weatherDesc: [StandartObject];
-  weatherIconUrl: [StandartObject];
+  weatherDesc: [WeatherStandartObject];
+  weatherIconUrl: [WeatherStandartObject];
   winddir16Point: string;
   winddirDegree: string;
   windspeedKmph: string;
@@ -32,13 +32,13 @@ interface CurrentCondition {
 }
 
 interface NearestArea {
-  areaName: [StandartObject];
-  country: [StandartObject];
+  areaName: [WeatherStandartObject];
+  country: [WeatherStandartObject];
   latitude: string;
   longitude: string;
   population: string;
-  region: [StandartObject];
-  weatherUrl: [StandartObject];
+  region: [WeatherStandartObject];
+  weatherUrl: [WeatherStandartObject];
 }
 
 interface Request {
@@ -46,12 +46,12 @@ interface Request {
   type: string;
 }
 
-interface Weather {
+interface DailyWeather {
   astronomy: Astronomy[];
   avgtempC: string;
   avgtempF: string;
   date: string;
-  hourly: Hourly[];
+  hourly: HourlyWeather[];
   maxtempC: string;
   maxtempF: string;
   mintempC: string;
@@ -60,7 +60,8 @@ interface Weather {
   totalSnow_cm: string;
   uvIndex: string;
 }
-interface StandartObject {
+
+interface WeatherStandartObject {
   value: string;
 }
 
@@ -73,7 +74,7 @@ interface Astronomy {
   sunset: string;
 }
 
-export interface Hourly {
+export interface HourlyWeather {
   DewPointC: string;
   DewPointF: string;
   FeelsLikeC: string;
@@ -96,7 +97,7 @@ export interface Hourly {
   chanceofwindy: string;
   cloudcover: string;
   humidity: string;
-  lang_ru: StandartObject[];
+  lang_ru: WeatherStandartObject[];
   precipInches: string;
   precipMM: string;
   pressure: string;
@@ -108,54 +109,64 @@ export interface Hourly {
   visibility: string;
   visibilityMiles: string;
   weatherCode: string;
-  weatherDesc: StandartObject[];
-  weatherIconUrl: StandartObject[];
+  weatherDesc: WeatherStandartObject[];
+  weatherIconUrl: WeatherStandartObject[];
   winddir16Point: string;
   winddirDegree: string;
   windspeedKmph: string;
   windspeedMiles: string;
 }
 
-export interface UsefullData {
+export interface Weather {
   position: string;
   icon: string;
   temperature: string;
   weatherDescription: string;
-  hour: Hourly[];
+  hourlyWeather: HourlyWeather[];
 }
 
-const changeTime = (weather:Weather):Hourly[] => {
-  const changedArray = [];
+const changeTime = (weather: DailyWeather): HourlyWeather[] => {
   const gap = 3 * 60 * 60 * 1000;
   const date = new Date(weather.date);
-  for (let i = 0; i < weather.hourly.length; i += 1) {
-    changedArray[i] = weather.hourly[i];
-    changedArray[i].time = new Date(+date + (gap * i));
-  }
+
+  const changedArray = weather.hourly.map((item, index) => {
+    return {
+      ...item,
+      time: new Date(+date + (gap * index)),
+    };
+  });
+
   return changedArray;
 };
+const changeData = (data:FetchedWeather):Weather => {
+  const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`;
+  return {
+    position: loc,
+    icon: data.current_condition[0].weatherCode,
+    temperature: data.current_condition[0].temp_C,
+    weatherDescription: data.current_condition[0].weatherDesc[0].value,
+    hourlyWeather: [...changeTime(data.weather[0]), ...changeTime(data.weather[1])],
+  };
+};
 
-export const fetchWeather = (text: string): Promise<UsefullData> => {
+export const fetchWeather = async (text: string): Promise<Weather> => {
   const url = `https://wttr.in/${text}?format=j1`;
+  const fetchedData = await fetch(url);
+  const commits = await fetchedData.json() as FetchedWeather;
+  const weatherData = changeData(commits);
+  // const weatherData = fetch(url)
+  //   .then((data) => data.json())
+  //   .then((data: FetchedWeather): Weather => {
+  // const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`
 
-  const weatherData = fetch(url)
-    .then((data) => data.json())
-    .then((data: FetchedWeather): UsefullData => {
-      const hourlyArray = () => {
-        return [...changeTime(data.weather[0]), ...changeTime(data.weather[1])];
-      };
-
-      const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`;
-      const hourly = hourlyArray();
-
-      return {
-        position: loc,
-        icon: data.current_condition[0].weatherCode,
-        temperature: data.current_condition[0].temp_C,
-        weatherDescription: data.current_condition[0].weatherDesc[0].value,
-        hour: hourly,
-      };
-    });
+  //     return {
+  //       position: loc,
+  //       icon: data.current_condition[0].weatherCode,
+  //       temperature: data.current_condition[0].temp_C,
+  //       weatherDescription: data.current_condition[0].weatherDesc[0].value,
+  //       hourlyWeather: [...changeTime(data.weather[0]), ...changeTime(data.weather[1])],
+  //     };
+  //   });
 
   return weatherData;
 };

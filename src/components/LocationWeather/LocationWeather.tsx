@@ -14,17 +14,22 @@ export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
     weatherDescription = 'loading',
     iconPath,
   } = props;
+
   return (
     <div className="container-weather">
       <div className="weather-logo">
         <img src={iconPath} alt="weather" className="logo" />
-        {// eslint-disable-next-line no-console
-        console.log(iconPath)
-        }
       </div>
-      <div className="weather"><strong>{weatherDescription}</strong></div>
+      <div className="weather">
+        <strong>{weatherDescription}</strong>
+      </div>
       <div className="location">{location}</div>
-      <div className="temperature"><strong>{`${temperature}°`}</strong></div>
+      <div className="temperature">
+        <strong>
+          {temperature}
+          °
+        </strong>
+      </div>
     </div>
   );
 };
