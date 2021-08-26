@@ -30,7 +30,7 @@ export const WeatherPage = (): JSX.Element => {
           location={weather?.position}
           temperature={weather?.temperature}
           weatherDescription={weather?.weatherDescription}
-          iconPath={ICON_CODES[weather?.icon ?? '113']}
+          iconPath={weather?.icon ? ICON_CODES[weather?.icon] : undefined}
         />
       </div>
 
