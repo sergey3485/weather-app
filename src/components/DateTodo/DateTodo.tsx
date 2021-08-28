@@ -4,14 +4,38 @@ import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
 import './dateTodo.css';
 
-export const DateTodo = (): JSX.Element => {
+export interface Todo {
+  time: string;
+  text: string;
+}
+
+export interface DateTodoProps {
+  todo: Todo[];
+}
+
+export const DateTodo = (props: DateTodoProps): JSX.Element => {
+  const { todo } = props;
   const [date, setDate] = React.useState(new Date());
+  const [count, setCounter] = React.useState(0);
 
   React.useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 10000);
 
     return () => clearInterval(timer);
   }, []);
+
+  const onClick = () => {
+    const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
+    const counter = (count + 1) * 2 + 1 <= length ? (count + 1) : 0;
+    setCounter(counter);
+  };
+
+  const filterTodoList = (data: Todo[], i: number): Todo[] => {
+    if ((todo.length % 2 === 1) && (count * 2 === todo.length - 1)) {
+      return [data[i * 2]];
+    }
+    return [data[i * 2], data[i * 2 + 1]];
+  };
 
   return (
     <div className="container-date-todo">
@@ -21,16 +45,16 @@ export const DateTodo = (): JSX.Element => {
       </div>
       <div className="date-day">{getCurrentDate()}</div>
       <div className="todo-container">
-        <button className="button-next" type="button">Next</button>
+        <button className="button-next" type="button" onClick={onClick}>Next</button>
         <div className="todo-list">
-          <div className="todo-item">
-            <div className="todo-time">16:39</div>
-            <div className="todo-text">Dinner at cafe</div>
-          </div>
-          <div className="todo-item">
-            <div className="todo-time">16:39</div>
-            <div className="todo-text">Go for a walk</div>
-          </div>
+          {filterTodoList(todo, count).map((data) => {
+            return (
+              <div className="todo-item">
+                <div className="todo-time">{data.time}</div>
+                <div className="todo-text">{data.text}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

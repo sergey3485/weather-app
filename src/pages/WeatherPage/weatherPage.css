@@ -21,5 +21,7 @@
   display: flex;
   overflow: auto;
   scrollbar-color: white royalblue;
+  margin-right: auto;
+  margin-left: auto;
 }
 
