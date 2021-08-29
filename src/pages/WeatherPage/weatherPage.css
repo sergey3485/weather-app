@@ -21,7 +21,12 @@
   display: flex;
   overflow: auto;
   scrollbar-color: white royalblue;
-  margin-right: auto;
-  margin-left: auto;
+  justify-content: center ;
 }
+@media (min-width: 1408) {
+  .hourly-weather-container{
+    justify-items: start;
+  }
+}
+
 
