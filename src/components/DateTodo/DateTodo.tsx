@@ -24,17 +24,39 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
     return () => clearInterval(timer);
   }, []);
 
+  // const onClick = () => {
+  //   const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
+  //   const counter = (count + 1) * 2 + 1 <= length ? (count + 1) : 0;
+  //   setCounter(counter);
+  // };
+
+  // const filterTodoList = (data: Todo[], i: number): Todo[] => {
+  //   if ((todo.length % 2 === 1) && (count * 2 === todo.length - 1)) {
+  //     return [data[i * 2]];
+  //   }
+  //   return [data[i * 2], data[i * 2 + 1]];
+  // };
   const onClick = () => {
-    const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
-    const counter = (count + 1) * 2 + 1 <= length ? (count + 1) : 0;
+    // const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
+    const counter = count + 1;
     setCounter(counter);
   };
 
   const filterTodoList = (data: Todo[], i: number): Todo[] => {
-    if ((todo.length % 2 === 1) && (count * 2 === todo.length - 1)) {
-      return [data[i * 2]];
+    // if (count === todo.length - 1) {
+    //   return [data[i]];
+    // } else if (count < todo.length) {
+    //   return [data[i], data[i + 1]];
+    // } else  (count === todo.length) {
+    //   return [{time: '', text: ''}];
+    // }
+    if (count === todo.length - 1) {
+      return [data[i]];
     }
-    return [data[i * 2], data[i * 2 + 1]];
+    if (count < todo.length) {
+      return [data[i], data[i + 1]];
+    }
+    return [{ time: '', text: '' }];
   };
 
   return (
@@ -45,7 +67,14 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
       </div>
       <div className="date-day">{getCurrentDate()}</div>
       <div className="todo-container">
-        <button className="button-next" type="button" onClick={onClick}>Next</button>
+        {count === todo.length ? (
+          <button className="button-next" type="button">Add Todo</button>
+        ) : (
+          <div>
+            <button className="button-next" type="button" onClick={onClick}>Next</button>
+            <button className="button-next" type="button">Add Todo</button>
+          </div>
+        )}
         <div className="todo-list">
           {filterTodoList(todo, count).map((data) => {
             return (

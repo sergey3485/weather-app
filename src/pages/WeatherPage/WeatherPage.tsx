@@ -40,6 +40,10 @@ const initialTodo: Todo[] = [
     time: '18:25',
     text: 'Послушать истории от Деда',
   },
+  {
+    time: '19:02',
+    text: 'Поиграть в лол',
+  },
 ];
 
 export const WeatherPage = (): JSX.Element => {
