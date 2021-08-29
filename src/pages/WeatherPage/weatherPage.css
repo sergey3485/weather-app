@@ -23,9 +23,9 @@
   scrollbar-color: white royalblue;
   justify-content: center ;
 }
-@media (min-width: 1408) {
+@media (max-width: 1408px) {
   .hourly-weather-container{
-    justify-items: start;
+    justify-content: flex-start;
   }
 }
 
