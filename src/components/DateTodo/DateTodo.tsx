@@ -53,7 +53,7 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
     // if (count === todo.length - 1) {
     //   return [data[count], data[count + 1] ? data[count + 1] : { time: '', text: '' }];
     // }
-    return [data[count] ? data[count] : { time: '', text: '' }, data[count + 1] ? data[count + 1] : { time: '', text: '' }];
+    return [data[count] ?? { time: '', text: '' }, data[count + 1] ?? { time: '', text: '' }];
   };
 
   return (
