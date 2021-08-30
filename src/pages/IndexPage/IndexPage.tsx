@@ -22,7 +22,7 @@ export const IndexPage = (): JSX.Element => {
   return (
     <div className="global-container">
       <form className="request-page-container" onSubmit={onSubmit}>
-        <div className="header">Weather-app</div>
+        <div className="header">Weather</div>
         <input value={text} onChange={changeText} className="place-request" type="text" placeholder="City, Country" />
       </form>
     </div>
