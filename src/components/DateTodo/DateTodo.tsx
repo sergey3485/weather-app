@@ -53,7 +53,7 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
     // if (count === todo.length - 1) {
     //   return [data[count], data[count + 1] ? data[count + 1] : { time: '', text: '' }];
     // }
-    return [data[count] ?? { time: '', text: '' }, data[count + 1] ?? { time: '', text: '' }];
+    return [data[count] ?? { time: '&', text: '' }, data[count + 1] ?? { time: '', text: '' }];
   };
 
   return (
@@ -76,8 +76,8 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
           {filterTodoList(todo).map((data) => {
             return (
               <div className="todo-item">
-                <div className="todo-time">{data.time}</div>
-                <div className="todo-text">{data.text}</div>
+                <div className="todo-time">{data.time === '&' ? 'На сегодня планов нет' : data.time}</div>
+                <div className="todo-text">{data.text ?? ''}</div>
               </div>
             );
           })}
