@@ -42,7 +42,7 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
     setCounter(counter);
   };
 
-  const filterTodoList = (data: Todo[], i: number): Todo[] => {
+  const filterTodoList = (data: Todo[]): Todo[] => {
     // if (count === todo.length - 1) {
     //   return [data[i]];
     // } else if (count < todo.length) {
@@ -50,13 +50,10 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
     // } else  (count === todo.length) {
     //   return [{time: '', text: ''}];
     // }
-    if (count === todo.length - 1) {
-      return [data[i]];
-    }
-    if (count < todo.length) {
-      return [data[i], data[i + 1]];
-    }
-    return [{ time: '', text: '' }];
+    // if (count === todo.length - 1) {
+    //   return [data[count], data[count + 1] ? data[count + 1] : { time: '', text: '' }];
+    // }
+    return [data[count] ? data[count] : { time: '', text: '' }, data[count + 1] ? data[count + 1] : { time: '', text: '' }];
   };
 
   return (
@@ -76,7 +73,7 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
           </div>
         )}
         <div className="todo-list">
-          {filterTodoList(todo, count).map((data) => {
+          {filterTodoList(todo).map((data) => {
             return (
               <div className="todo-item">
                 <div className="todo-time">{data.time}</div>
