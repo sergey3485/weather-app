@@ -8,5 +8,5 @@ body {
   text-rendering: optimizeLegibility;
 
   color: white;
-  background-color: rgb(83, 36, 224);
+  background: linear-gradient(rgb(20, 48, 255), rgb(0, 0, 131));
 }
