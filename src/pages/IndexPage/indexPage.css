@@ -18,10 +18,13 @@
 }
 
 .header {
-  font-size: 64px;
+  font-size: 48px;
 }
 
 .place-request {
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 16px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
 }
