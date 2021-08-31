@@ -25,3 +25,22 @@
 .temperature {
   font-size: 40px;
 }
+
+@media (max-width : 425px) {
+  .logo {
+    width: 62px;
+    height: 62px;
+  }
+
+  .location {
+    font-size: 10px;
+  }
+
+  .weather {
+    font-size: 25px;
+  }
+
+  .temperature {
+    font-size: 25px;
+  }
+}

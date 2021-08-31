@@ -33,3 +33,23 @@
 .time-index {
   font-size: 14px;
 }
+
+@media (max-width : 425px) {
+  .day-container {
+    min-width: 104px;
+    padding: 6px 18px;
+    width: 124px;
+  }
+  .icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .day-temperature {
+    font-size: 12px;
+  }
+
+  .day {
+    font-size: 15px;
+  }
+}

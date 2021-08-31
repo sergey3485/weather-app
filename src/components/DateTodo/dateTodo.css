@@ -1,6 +1,7 @@
 .date-time {
   font-size: 24px;
 }
+
 .time-index {
   font-size: 16px;
 }
@@ -30,4 +31,34 @@
 .todo-item {
   font-size: 20px;
   margin-top: 12px;
+}
+
+@media (max-width: 425px) {
+  .date-time {
+    font-size: 15px;
+  }
+
+  .time-index {
+    font-size: 10px;
+  }
+
+  .date-day {
+    font-size: 10px;
+  }
+
+  .button-next {
+    font-size: 15px;
+  margin-top: 30px;
+  margin-right: 15px;
+  }
+
+  .todo-text {
+    margin-left: 15px;
+  }
+
+  .todo-item {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+
 }
