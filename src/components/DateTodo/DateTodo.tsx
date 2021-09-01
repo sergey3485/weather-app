@@ -9,14 +9,44 @@ export interface Todo {
   text: string;
 }
 
-export interface DateTodoProps {
-  todo: Todo[];
-}
+const initialTodo: Todo[] = [
+  {
+    time: '12:03',
+    text: 'Посетить врача',
+  },
+  {
+    time: '13:00',
+    text: 'Пообедать',
+  },
+  {
+    time: '14:00',
+    text: 'Подразнить попугаев',
+  },
+  {
+    time: '15:10',
+    text: 'Помыть посуду',
+  },
+  {
+    time: '16:20',
+    text: 'Сделать таски',
+  },
+  {
+    time: '17:05',
+    text: 'Доебаться до Руслана',
+  },
+  {
+    time: '18:25',
+    text: 'Послушать истории от Деда',
+  },
+  {
+    time: '19:02',
+    text: 'Поиграть в лол',
+  },
+];
 
-export const DateTodo = (props: DateTodoProps): JSX.Element => {
-  const { todo } = props;
+export const DateTodo = (): JSX.Element => {
   const [date, setDate] = React.useState(new Date());
-  const [count, setCounter] = React.useState(0);
+  const [todos, setTodos] = React.useState(initialTodo);
 
   React.useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 10000);
@@ -37,23 +67,9 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
   //   return [data[i * 2], data[i * 2 + 1]];
   // };
   const onClick = () => {
-    // const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
-    const counter = count + 1;
-    setCounter(counter);
-  };
-
-  const filterTodoList = (data: Todo[]): Todo[] => {
-    // if (count === todo.length - 1) {
-    //   return [data[i]];
-    // } else if (count < todo.length) {
-    //   return [data[i], data[i + 1]];
-    // } else  (count === todo.length) {
-    //   return [{time: '', text: ''}];
-    // }
-    // if (count === todo.length - 1) {
-    //   return [data[count], data[count + 1] ? data[count + 1] : { time: '', text: '' }];
-    // }
-    return [data[count] ?? { time: '&', text: '' }, data[count + 1] ?? { time: '', text: '' }];
+    const newtodos = todos;
+    newtodos.shift();
+    setTodos([...newtodos]);
   };
 
   return (
@@ -64,8 +80,11 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
       </div>
       <div className="date-day">{getCurrentDate()}</div>
       <div className="todo-container">
-        {count === todo.length ? (
-          <button className="button-next" type="button">Add Todo</button>
+        {todos.length === 0 ? (
+          <div>
+            <button className="button-next" type="button">Add Todo</button>
+            <div className="todo-done">На сегодня планов нет</div>
+          </div>
         ) : (
           <div>
             <button className="button-next" type="button" onClick={onClick}>Next</button>
@@ -73,11 +92,11 @@ export const DateTodo = (props: DateTodoProps): JSX.Element => {
           </div>
         )}
         <div className="todo-list">
-          {filterTodoList(todo).map((data) => {
+          {todos.slice(0, 2).map((data) => {
             return (
               <div className="todo-item">
-                <div className="todo-time">{data.time === '&' ? 'На сегодня планов нет' : data.time}</div>
-                <div className="todo-text">{data.text ?? ''}</div>
+                <div className="todo-time">{data.time}</div>
+                <div className="todo-text">{data.text}</div>
               </div>
             );
           })}
