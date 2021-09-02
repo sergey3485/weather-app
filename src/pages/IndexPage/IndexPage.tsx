@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import './indexPage.css';
+import styles from './indexPage.module.css';
 
 export const IndexPage = (): JSX.Element => {
   const history = useHistory();
@@ -20,10 +20,10 @@ export const IndexPage = (): JSX.Element => {
   };
 
   return (
-    <div className="global-container">
-      <form className="request-page-container" onSubmit={onSubmit}>
-        <div className="header">Weather</div>
-        <input value={text} onChange={changeText} className="place-request" type="text" placeholder="City, Country" />
+    <div className={styles['global-container']}>
+      <form className={styles['request-page-container']} onSubmit={onSubmit}>
+        <div className={styles.header}>Weather</div>
+        <input value={text} onChange={changeText} className={styles['place-request']} type="text" placeholder="City, Country" />
       </form>
     </div>
   );

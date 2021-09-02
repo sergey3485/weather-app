@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
-import './dateTodo.css';
+import styles from './dateTodo.module.css';
 
 export interface Todo {
   time: string;
@@ -73,30 +73,30 @@ export const DateTodo = (): JSX.Element => {
   };
 
   return (
-    <div className="container-date-todo">
-      <div className="date-time">
+    <div className={styles['container-date-todo']}>
+      <div className={styles['date-time']}>
         <span><strong>{getCurrentHour(date).value}</strong></span>
-        <span className="time-index"><strong>{getCurrentHour(date).ampm}</strong></span>
+        <span className={styles['time-index']}><strong>{getCurrentHour(date).ampm}</strong></span>
       </div>
-      <div className="date-day">{getCurrentDate()}</div>
-      <div className="todo-container">
+      <div className={styles['date-day']}>{getCurrentDate()}</div>
+      <div className={styles['todo-container']}>
         {todos.length === 0 ? (
           <div>
-            <button className="button-next" type="button">Add Todo</button>
-            <div className="todo-done">На сегодня планов нет</div>
+            <button className={styles['button-next']} type="button">Add Todo</button>
+            <div className={styles['todo-done']}>На сегодня планов нет</div>
           </div>
         ) : (
           <div>
-            <button className="button-next" type="button" onClick={onClick}>Next</button>
-            <button className="button-next" type="button">Add Todo</button>
+            <button className={styles['button-next']} type="button" onClick={onClick}>Next</button>
+            <button className={styles['button-next']} type="button">Add Todo</button>
           </div>
         )}
-        <div className="todo-list">
+        <div className={styles['todo-list']}>
           {todos.slice(0, 2).map((data) => {
             return (
-              <div className="todo-item">
-                <div className="todo-time">{data.time}</div>
-                <div className="todo-text">{data.text}</div>
+              <div className={styles['todo-item']}>
+                <div className={styles['todo-time']}>{data.time}</div>
+                <div className={styles['todo-text']}>{data.text}</div>
               </div>
             );
           })}

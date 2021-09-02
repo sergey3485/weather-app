@@ -1,4 +1,4 @@
-import './locationWeather.css';
+import styles from './locationWeather.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
 
 export interface LocationWeatherProps {
@@ -17,17 +17,17 @@ export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
   } = props;
 
   return (
-    <div className="container-weather">
-      <div className="weather-logo">
-        {iconPath ? <img src={iconPath} alt="weather" className="logo" /> : <Skeleton width="100px" height="100px" />}
+    <div className={styles['container-weather']}>
+      <div className={styles['weather-logo']}>
+        {iconPath ? <img src={iconPath} alt="weather" className={styles.logo} /> : <Skeleton width="100px" height="100px" />}
       </div>
-      <div className="weather">
+      <div className={styles.weather}>
         {weatherDescription ? <strong>{weatherDescription}</strong> : <Skeleton width="200px" />}
       </div>
-      <div className="location">
+      <div className={styles.location}>
         {location ?? <Skeleton width="200px" height="20px" />}
       </div>
-      <div className="temperature">
+      <div className={styles.temperature}>
         {temperature ? (
           <strong>
             {temperature}

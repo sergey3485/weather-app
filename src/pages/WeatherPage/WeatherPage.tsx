@@ -9,7 +9,7 @@ import { fetchWeather, Weather } from '../../utils/api';
 
 import { ICON_CODES } from '../../constants/weatherCodes';
 
-import './weatherPage.css';
+import styles from './weatherPage.module.css';
 
 export const WeatherPage = (): JSX.Element => {
   const [weather, setWeather] = React.useState<Weather>();
@@ -23,8 +23,8 @@ export const WeatherPage = (): JSX.Element => {
   }, [params]);
 
   return (
-    <div className="content-container">
-      <div className="weather-header">
+    <div className={styles['content-container']}>
+      <div className={styles['weather-header']}>
         <DateTodo />
         <LocationWeather
           location={weather?.position}
