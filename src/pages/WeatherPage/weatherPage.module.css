@@ -15,20 +15,6 @@
   margin-bottom: auto;
 }
 
-.hourly-weather-container{
-  margin-top: auto;
-  -webkit-box-pack: center;
-  display: flex;
-  overflow: auto;
-  scrollbar-color: white royalblue;
-  justify-content: center ;
-}
-  @media (max-width: 1408px) {
-  .hourly-weather-container{
-    justify-content: flex-start;
-  }
-}
-
 @media (max-width: 425px) {
   .weather-header {
     flex-direction: column-reverse;

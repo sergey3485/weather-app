@@ -34,6 +34,15 @@
   font-size: 14px;
 }
 
+.hourly-weather-container{
+  margin-top: auto;
+  -webkit-box-pack: center;
+  display: flex;
+  overflow: auto;
+  scrollbar-color: white royalblue;
+  justify-content: center ;
+}
+
 @media (max-width : 425px) {
   .day-container {
     min-width: 160px;
@@ -61,4 +70,10 @@
     font-size: 20px;
   }
 
+}
+
+@media (max-width: 1408px) {
+  .hourly-weather-container{
+    justify-content: flex-start;
+  }
 }
