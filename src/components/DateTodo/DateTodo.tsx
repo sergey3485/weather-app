@@ -49,6 +49,7 @@ export const DateTodo = (): JSX.Element => {
   const [date, setDate] = React.useState(new Date());
   const [todos, setTodos] = React.useState(initialTodo);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [step, setStep] = React.useState(0);
 
   React.useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 10000);
@@ -69,9 +70,17 @@ export const DateTodo = (): JSX.Element => {
   //   return [data[i * 2], data[i * 2 + 1]];
   // };
   const onClick = () => {
-    const newtodos = todos;
-    newtodos.shift();
-    setTodos([...newtodos]);
+    // const newtodos = todos;
+    // newtodos.shift();
+    // setTodos([...newtodos]);
+    setStep(step + 1);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const deleteTodo = (todo:Todo) => {
+    const changedTodoList = [...todos];
+    changedTodoList.splice(changedTodoList.indexOf(todo), 1);
+    setTodos(changedTodoList);
   };
 
   return (
@@ -81,6 +90,17 @@ export const DateTodo = (): JSX.Element => {
           <div className={styles.shadow} />
           <div className={styles.modal}>
             <button type="button" onClick={() => setIsOpen(false)}>close</button>
+            <div className={styles['modal-todo-list']}>
+              {todos.map((data) => {
+                return (
+                  <div className={styles['todo-item']}>
+                    <div className={styles['todo-time']}>{data.time}</div>
+                    <div className={styles['todo-text']}>{data.text}</div>
+                    <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>detele</button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
@@ -93,7 +113,7 @@ export const DateTodo = (): JSX.Element => {
         {todos.length === 0 ? (
           <div>
             {/* <button className={styles['button-next']} type="button">Add Todo</button> */}
-            <button type="button" onClick={() => setIsOpen(true)}>
+            <button type="button" className={styles['button-menu']} onClick={() => setIsOpen(true)}>
               <img src={iconPath} alt="" className={styles.logo} />
             </button>
             <div className={styles['todo-done']}>На сегодня планов нет</div>
@@ -107,7 +127,7 @@ export const DateTodo = (): JSX.Element => {
           </div>
         )}
         <div className={styles['todo-list']}>
-          {todos.slice(0, 2).map((data) => {
+          {todos.slice(step, step + 2).map((data) => {
             return (
               <div className={styles['todo-item']}>
                 <div className={styles['todo-time']}>{data.time}</div>
