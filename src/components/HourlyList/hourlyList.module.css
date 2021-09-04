@@ -4,6 +4,7 @@
   align-items: center;
   display: flex;
 }
+
 .day-container {
   min-width: 160px;
   padding: 8px 24px;
@@ -14,9 +15,11 @@
   justify-items: center;
   align-items: center;
 }
+
 .day-container:hover {
   background: linear-gradient(to top, rgba(255, 255, 255, 0.425),rgba(255, 255, 255, 0))
 }
+
 .icon {
   width: 80px;
   height: 80px;
@@ -54,9 +57,11 @@
     justify-items: center;
     align-items: center;
   }
+
   .day-container:hover {
     background: linear-gradient(to top, rgba(255, 255, 255, 0.425),rgba(255, 255, 255, 0))
   }
+
   .icon {
     width: 80px;
     height: 80px;
@@ -73,6 +78,7 @@
 }
 
 @media (max-width: 1408px) {
+
   .hourly-weather-container{
     justify-content: flex-start;
   }

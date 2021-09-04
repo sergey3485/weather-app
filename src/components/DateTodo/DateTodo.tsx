@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
+import iconPath from '../../assets/weather-icons/menu.svg';
 
 import styles from './dateTodo.module.css';
 
@@ -47,6 +48,7 @@ const initialTodo: Todo[] = [
 export const DateTodo = (): JSX.Element => {
   const [date, setDate] = React.useState(new Date());
   const [todos, setTodos] = React.useState(initialTodo);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 10000);
@@ -74,6 +76,14 @@ export const DateTodo = (): JSX.Element => {
 
   return (
     <div className={styles['container-date-todo']}>
+      {isOpen && (
+        <div className={styles['modal-content']}>
+          <div className={styles.shadow} />
+          <div className={styles.modal}>
+            <button type="button" onClick={() => setIsOpen(false)}>close</button>
+          </div>
+        </div>
+      )}
       <div className={styles['date-time']}>
         <span><strong>{getCurrentHour(date).value}</strong></span>
         <span className={styles['time-index']}><strong>{getCurrentHour(date).ampm}</strong></span>
@@ -82,13 +92,18 @@ export const DateTodo = (): JSX.Element => {
       <div className={styles['todo-container']}>
         {todos.length === 0 ? (
           <div>
-            <button className={styles['button-next']} type="button">Add Todo</button>
+            {/* <button className={styles['button-next']} type="button">Add Todo</button> */}
+            <button type="button" onClick={() => setIsOpen(true)}>
+              <img src={iconPath} alt="" className={styles.logo} />
+            </button>
             <div className={styles['todo-done']}>На сегодня планов нет</div>
           </div>
         ) : (
           <div>
             <button className={styles['button-next']} type="button" onClick={onClick}>Next</button>
-            <button className={styles['button-next']} type="button">Add Todo</button>
+            <button className={styles['button-menu']} type="button" onClick={() => setIsOpen(true)}>
+              <img src={iconPath} alt="" className={styles.logo} />
+            </button>
           </div>
         )}
         <div className={styles['todo-list']}>
