@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { useClose } from '../../Hooks/useClose';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import { usePressOnKey } from '../../hooks/useKey';
 
 import styles from './modal.module.css';
 
@@ -14,22 +15,8 @@ export const Modal = (props: ModalProps) => {
   const { open, children, onClose } = props;
   const modalWindow = React.useRef<HTMLDivElement>(null);
 
-  // React.useEffect(() => {
-  //   const closeModal = (event: MouseEvent | TouchEvent) => {
-  //     if (!modalWindow.current?.contains(event.target as HTMLElement)) {
-  //       onClose();
-  //     }
-  //   };
-  //   document.addEventListener('mousedown', closeModal);
-  //   document.addEventListener('touchstart', closeModal);
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', closeModal);
-  //     document.removeEventListener('touchstart', closeModal);
-  //   };
-  // }, [onClose]);
-
-  useClose(modalWindow, onClose);
+  useClickOutside(modalWindow, onClose);
+  usePressOnKey('Escape', onClose);
 
   if (!open) {
     return (null);
