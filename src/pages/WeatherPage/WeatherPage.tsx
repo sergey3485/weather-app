@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { LocationWeather } from '../../components/LocationWeather/LocationWeather';
-import { DateTodo } from '../../components/DateTodo/DateTodo';
-import { HourlyList } from '../../components/HourlyList/HourlyList';
+import { LocationWeather } from '../../components/LocationWeather';
+import { DateTodo } from '../../components/DateTodo';
+import { HourlyList } from '../../components/HourlyList';
 
 import { fetchWeather, Weather } from '../../utils/api';
 

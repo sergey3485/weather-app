@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Modal } from '../Modal';
+
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 import iconPath from '../../assets/weather-icons/menu.svg';
 
@@ -50,6 +52,12 @@ export const DateTodo = (): JSX.Element => {
   const [todos, setTodos] = React.useState(initialTodo);
   const [isOpen, setIsOpen] = React.useState(false);
   const [step, setStep] = React.useState(0);
+  const [modalTodos, setModalTodos] = React.useState(initialTodo);
+
+  const closeModal = () => {
+    setTodos(modalTodos);
+    setIsOpen(false);
+  };
 
   React.useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 10000);
@@ -57,53 +65,33 @@ export const DateTodo = (): JSX.Element => {
     return () => clearInterval(timer);
   }, []);
 
-  // const onClick = () => {
-  //   const length = todo.length % 2 === 0 ? todo.length : todo.length + 1;
-  //   const counter = (count + 1) * 2 + 1 <= length ? (count + 1) : 0;
-  //   setCounter(counter);
-  // };
-
-  // const filterTodoList = (data: Todo[], i: number): Todo[] => {
-  //   if ((todo.length % 2 === 1) && (count * 2 === todo.length - 1)) {
-  //     return [data[i * 2]];
-  //   }
-  //   return [data[i * 2], data[i * 2 + 1]];
-  // };
-  const onClick = () => {
-    // const newtodos = todos;
-    // newtodos.shift();
-    // setTodos([...newtodos]);
-    setStep(step + 1);
+  const deleteTodo = (todo:Todo) => {
+    const changedTodoList = [...modalTodos];
+    changedTodoList.splice(changedTodoList.indexOf(todo), 1);
+    setModalTodos(changedTodoList);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const deleteTodo = (todo:Todo) => {
-    const changedTodoList = [...todos];
-    changedTodoList.splice(changedTodoList.indexOf(todo), 1);
-    setTodos(changedTodoList);
+  const openModal = () => {
+    setModalTodos(todos);
+    setIsOpen(true);
   };
 
   return (
     <div className={styles['container-date-todo']}>
-      {isOpen && (
-        <div className={styles['modal-content']}>
-          <div className={styles.shadow} />
-          <div className={styles.modal}>
-            <button type="button" onClick={() => setIsOpen(false)}>close</button>
-            <div className={styles['modal-todo-list']}>
-              {todos.map((data) => {
-                return (
-                  <div className={styles['todo-item']}>
-                    <div className={styles['todo-time']}>{data.time}</div>
-                    <div className={styles['todo-text']}>{data.text}</div>
-                    <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>detele</button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+      <Modal open={isOpen} onClose={closeModal}>
+        <button type="button" onClick={closeModal}>close</button>
+        <div className={styles['modal-todo-list']}>
+          {modalTodos.map((data) => {
+            return (
+              <div className={styles['todo-item']}>
+                <div className={styles['todo-time']}>{data.time}</div>
+                <div className={styles['todo-text']}>{data.text}</div>
+                <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>detele</button>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </Modal>
       <div className={styles['date-time']}>
         <span><strong>{getCurrentHour(date).value}</strong></span>
         <span className={styles['time-index']}><strong>{getCurrentHour(date).ampm}</strong></span>
@@ -112,16 +100,15 @@ export const DateTodo = (): JSX.Element => {
       <div className={styles['todo-container']}>
         {todos.length === 0 ? (
           <div>
-            {/* <button className={styles['button-next']} type="button">Add Todo</button> */}
-            <button type="button" className={styles['button-menu']} onClick={() => setIsOpen(true)}>
+            <button type="button" className={styles['button-menu']} onClick={openModal}>
               <img src={iconPath} alt="" className={styles.logo} />
             </button>
             <div className={styles['todo-done']}>На сегодня планов нет</div>
           </div>
         ) : (
           <div>
-            <button className={styles['button-next']} type="button" onClick={onClick}>Next</button>
-            <button className={styles['button-menu']} type="button" onClick={() => setIsOpen(true)}>
+            <button className={styles['button-next']} type="button" onClick={() => setStep(step + 1)}>Next</button>
+            <button className={styles['button-menu']} type="button" onClick={openModal}>
               <img src={iconPath} alt="" className={styles.logo} />
             </button>
           </div>

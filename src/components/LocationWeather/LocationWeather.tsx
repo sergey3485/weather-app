@@ -1,5 +1,5 @@
 import styles from './locationWeather.module.css';
-import { Skeleton } from '../Skeleton/Skeleton';
+import { Skeleton } from '../Skeleton';
 
 export interface LocationWeatherProps {
   location?: string;
