@@ -41,6 +41,7 @@
 
 .todo-text {
   margin-left: 24px;
+  margin-right: 24px;
 }
 
 .todo-item {
@@ -58,13 +59,6 @@
   height: 16px;
 }
 
-.modal {
-  margin: auto;
-  padding: 48px;
-  background-color: white;
-  color:black;
-}
-
 .modal-content {
   position: fixed;
   display: flex;
@@ -75,16 +69,41 @@
   left: 0;
 }
 
-.delete-button {
-  margin-left: 16px;
+.modal-container {
+  background-color: #161616;
+  color: white;
+  padding: 24px;
+  position: relative;
 }
 
-.shadow {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.308);
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+.modal-todo-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.close-modal-img{
+  width: 24px;
+  height: 24px;
+}
+
+.close-modal-button {
+  padding: 0;
+  border:none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  margin-left: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.delete-button {
+  color: white;
+  margin-left: auto;
+  border:none;
+  background: none;
+  cursor: pointer;
 }
 
 @media (max-width: 425px) {

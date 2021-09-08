@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { RiCloseFill, RiMenu3Line } from 'react-icons/ri';
 
 import { Modal } from '../Modal';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
-import iconPath from '../../assets/weather-icons/menu.svg';
 
 import styles from './dateTodo.module.css';
 
@@ -65,7 +65,7 @@ export const DateTodo = (): JSX.Element => {
     return () => clearInterval(timer);
   }, []);
 
-  const deleteTodo = (todo:Todo) => {
+  const deleteTodo = (todo: Todo) => {
     const changedTodoList = [...modalTodos];
     changedTodoList.splice(changedTodoList.indexOf(todo), 1);
     setModalTodos(changedTodoList);
@@ -76,53 +76,67 @@ export const DateTodo = (): JSX.Element => {
     setIsOpen(true);
   };
 
+  const isTodosEmpty = todos.length === 0;
+
   return (
     <div className={styles['container-date-todo']}>
       <Modal open={isOpen} onClose={closeModal}>
-        <button type="button" onClick={closeModal}>close</button>
-        <div className={styles['modal-todo-list']}>
-          {modalTodos.map((data) => {
-            return (
-              <div className={styles['todo-item']}>
-                <div className={styles['todo-time']}>{data.time}</div>
-                <div className={styles['todo-text']}>{data.text}</div>
-                <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>detele</button>
-              </div>
-            );
-          })}
+        <div className={styles['modal-container']}>
+          <button type="button" onClick={closeModal} className={styles['close-modal-button']}>
+            <RiCloseFill size={24} color="white" />
+          </button>
+          <div className={styles['modal-todo-list']}>
+            {modalTodos.map((data) => {
+              return (
+                <div className={styles['todo-item']}>
+                  <div className={styles['todo-time']}>{data.time}</div>
+                  <div className={styles['todo-text']}>{data.text}</div>
+                  <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>
+                    Delete
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Modal>
       <div className={styles['date-time']}>
-        <span><strong>{getCurrentHour(date).value}</strong></span>
-        <span className={styles['time-index']}><strong>{getCurrentHour(date).ampm}</strong></span>
+        <span>
+          <strong>{getCurrentHour(date).value}</strong>
+        </span>
+        <span className={styles['time-index']}>
+          <strong>{getCurrentHour(date).ampm}</strong>
+        </span>
       </div>
       <div className={styles['date-day']}>{getCurrentDate()}</div>
       <div className={styles['todo-container']}>
-        {todos.length === 0 ? (
-          <div>
-            <button type="button" className={styles['button-menu']} onClick={openModal}>
-              <img src={iconPath} alt="" className={styles.logo} />
+        <div>
+          {!isTodosEmpty && (
+            <button className={styles['button-next']} type="button" onClick={() => setStep(step + 1)}>
+              Next
             </button>
-            <div className={styles['todo-done']}>На сегодня планов нет</div>
-          </div>
-        ) : (
-          <div>
-            <button className={styles['button-next']} type="button" onClick={() => setStep(step + 1)}>Next</button>
-            <button className={styles['button-menu']} type="button" onClick={openModal}>
-              <img src={iconPath} alt="" className={styles.logo} />
-            </button>
+          )}
+          <button className={styles['button-menu']} type="button" onClick={openModal}>
+            <RiMenu3Line color="white" />
+          </button>
+        </div>
+
+        {isTodosEmpty && (
+          <div className={styles['todo-done']}>На сегодня планов нет</div>
+        )}
+
+        {!isTodosEmpty && (
+          <div className={styles['todo-list']}>
+            {todos.slice(step, step + 2).map((data) => {
+              return (
+                <div className={styles['todo-item']}>
+                  <div className={styles['todo-time']}>{data.time}</div>
+                  <div className={styles['todo-text']}>{data.text}</div>
+                </div>
+              );
+            })}
           </div>
         )}
-        <div className={styles['todo-list']}>
-          {todos.slice(step, step + 2).map((data) => {
-            return (
-              <div className={styles['todo-item']}>
-                <div className={styles['todo-time']}>{data.time}</div>
-                <div className={styles['todo-text']}>{data.text}</div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export const Modal = (props: ModalProps) => {
   }
 
   return (
-    <div className={styles['modal-content']}>
+    <div className={styles['modal-window']}>
       <div
         className={styles.shadow}
       />
