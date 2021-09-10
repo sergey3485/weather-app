@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RiCloseFill, RiMenu3Line } from 'react-icons/ri';
+import { RiCloseFill, RiMenu3Line, RiEdit2Fill } from 'react-icons/ri';
 
 import { Modal } from '../Modal';
 
@@ -53,6 +53,7 @@ export const DateTodo = (): JSX.Element => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [step, setStep] = React.useState(0);
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
+  const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
 
   const closeModal = () => {
     setTodos(modalTodos);
@@ -76,6 +77,26 @@ export const DateTodo = (): JSX.Element => {
     setIsOpen(true);
   };
 
+  const saveChanges = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') return;
+
+    if (isEditing !== false) {
+      const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+      const newTodo = {
+        ...modalTodos[todoIndex],
+        text: event.currentTarget.value,
+      };
+
+      setModalTodos([
+        ...modalTodos.slice(0, todoIndex),
+        newTodo,
+        ...modalTodos.slice(todoIndex + 1, todos.length),
+      ]);
+
+      setIsEditing(false);
+    }
+  };
+
   const isTodosEmpty = todos.length === 0;
 
   return (
@@ -85,12 +106,25 @@ export const DateTodo = (): JSX.Element => {
           <button type="button" onClick={closeModal} className={styles['close-modal-button']}>
             <RiCloseFill size={24} color="white" />
           </button>
+          <div className={styles['modal-header']}>Todo`s editor</div>
           <div className={styles['modal-todo-list']}>
             {modalTodos.map((data) => {
               return (
                 <div className={styles['todo-item']}>
                   <div className={styles['todo-time']}>{data.time}</div>
-                  <div className={styles['todo-text']}>{data.text}</div>
+                  {isEditing === data.text && (
+                  <input
+                    defaultValue={data.text}
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
+                    autoFocus
+                    onKeyDown={saveChanges}
+                    onBlur={() => setIsEditing(false)}
+                  />
+                  )}
+                  {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
+                  <button type="button" className={styles['edit-todo']} onClick={() => setIsEditing(data.text)}>
+                    <RiEdit2Fill size={16} color="white" />
+                  </button>
                   <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>
                     Delete
                   </button>
@@ -100,8 +134,8 @@ export const DateTodo = (): JSX.Element => {
           </div>
         </div>
       </Modal>
-      <div className={styles['date-time']}>
-        <span>
+      <div>
+        <span className={styles['date-time']}>
           <strong>{getCurrentHour(date).value}</strong>
         </span>
         <span className={styles['time-index']}>
