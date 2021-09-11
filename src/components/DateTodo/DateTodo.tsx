@@ -55,10 +55,10 @@ export const DateTodo = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
-  const [isSaved, setISSaved] = React.useState(false);
+  const [SavedTodos, setSavedTodos] = React.useState(initialTodo);
 
   const closeModal = () => {
-    if (isSaved) setTodos(modalTodos);
+    setTodos(SavedTodos);
     setIsOpen(false);
   };
 
@@ -133,7 +133,7 @@ export const DateTodo = (): JSX.Element => {
                 </div>
               );
             })}
-            <button type="button" onClick={() => setISSaved(true)}>Save</button>
+            <button type="button" onClick={() => setSavedTodos(modalTodos)}>Save</button>
           </div>
         </div>
       </Modal>
