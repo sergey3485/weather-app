@@ -49,16 +49,14 @@ const initialTodo: Todo[] = [
 
 export const DateTodo = (): JSX.Element => {
   const [date, setDate] = React.useState(new Date());
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [todos, setTodos] = React.useState(initialTodo);
   const [isOpen, setIsOpen] = React.useState(false);
   const [step, setStep] = React.useState(0);
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
-  const [SavedTodos, setSavedTodos] = React.useState(initialTodo);
 
   const closeModal = () => {
-    setTodos(SavedTodos);
+    setTodos(modalTodos);
     setIsOpen(false);
   };
 
@@ -103,9 +101,9 @@ export const DateTodo = (): JSX.Element => {
 
   return (
     <div className={styles['container-date-todo']}>
-      <Modal open={isOpen} onClose={closeModal}>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <div className={styles['modal-container']}>
-          <button type="button" onClick={closeModal} className={styles['close-modal-button']}>
+          <button type="button" onClick={() => setIsOpen(false)} className={styles['close-modal-button']}>
             <RiCloseFill size={24} color="white" />
           </button>
           <div className={styles['modal-header']}>Todo`s editor</div>
@@ -133,7 +131,7 @@ export const DateTodo = (): JSX.Element => {
                 </div>
               );
             })}
-            <button type="button" onClick={() => setSavedTodos(modalTodos)}>Save</button>
+            <button type="button" onClick={closeModal}>Save</button>
           </div>
         </div>
       </Modal>
