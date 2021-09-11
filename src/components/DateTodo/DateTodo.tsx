@@ -49,14 +49,16 @@ const initialTodo: Todo[] = [
 
 export const DateTodo = (): JSX.Element => {
   const [date, setDate] = React.useState(new Date());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [todos, setTodos] = React.useState(initialTodo);
   const [isOpen, setIsOpen] = React.useState(false);
   const [step, setStep] = React.useState(0);
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
+  const [isSaved, setISSaved] = React.useState(false);
 
   const closeModal = () => {
-    setTodos(modalTodos);
+    if (isSaved) setTodos(modalTodos);
     setIsOpen(false);
   };
 
@@ -131,6 +133,7 @@ export const DateTodo = (): JSX.Element => {
                 </div>
               );
             })}
+            <button type="button" onClick={() => setISSaved(true)}>Save</button>
           </div>
         </div>
       </Modal>
