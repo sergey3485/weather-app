@@ -55,6 +55,11 @@ export const DateTodo = (): JSX.Element => {
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
 
+  const style = {
+    transform: `translateY(-${step * 36}px)`,
+    transition: '1s',
+  };
+
   const closeModal = () => {
     setTodos(modalTodos);
     setIsOpen(false);
@@ -95,6 +100,11 @@ export const DateTodo = (): JSX.Element => {
 
       setIsEditing(false);
     }
+  };
+
+  const onNext = () => {
+    if (step === todos.length) return;
+    setStep((prevStep) => prevStep + 1);
   };
 
   const isTodosEmpty = todos.length === 0;
@@ -147,7 +157,7 @@ export const DateTodo = (): JSX.Element => {
       <div className={styles['todo-container']}>
         <div>
           {!isTodosEmpty && (
-            <button className={styles['button-next']} type="button" onClick={() => setStep(step + 1)}>
+            <button className={styles['button-next']} type="button" onClick={onNext}>
               Next
             </button>
           )}
@@ -161,15 +171,17 @@ export const DateTodo = (): JSX.Element => {
         )}
 
         {!isTodosEmpty && (
-          <div className={styles['todo-list']}>
-            {todos.slice(step, step + 2).map((data) => {
-              return (
-                <div className={styles['todo-item']}>
-                  <div className={styles['todo-time']}>{data.time}</div>
-                  <div className={styles['todo-text']}>{data.text}</div>
-                </div>
-              );
-            })}
+          <div className={styles['visible-todo-list']}>
+            <div className={styles['todo-list']} style={style}>
+              {todos.map((data) => {
+                return (
+                  <div className={styles['todo-item']}>
+                    <div className={styles['todo-time']}>{data.time}</div>
+                    <div className={styles['todo-text']}>{data.text}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
