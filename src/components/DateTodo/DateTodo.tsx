@@ -123,13 +123,13 @@ export const DateTodo = (): JSX.Element => {
                 <div className={styles['todo-item']}>
                   <div className={styles['todo-time']}>{data.time}</div>
                   {isEditing === data.text && (
-                  <input
-                    defaultValue={data.text}
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus
-                    onKeyDown={saveChanges}
-                    onBlur={() => setIsEditing(false)}
-                  />
+                    <input
+                      defaultValue={data.text}
+                      // eslint-disable-next-line jsx-a11y/no-autofocus
+                      autoFocus
+                      onKeyDown={saveChanges}
+                      onBlur={() => setIsEditing(false)}
+                    />
                   )}
                   {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
                   <button type="button" className={styles['edit-todo']} onClick={() => setIsEditing(data.text)}>
@@ -141,7 +141,9 @@ export const DateTodo = (): JSX.Element => {
                 </div>
               );
             })}
-            <button type="button" onClick={closeModal}>Save</button>
+            <button type="button" onClick={closeModal} className={styles['save-button']}>
+              Save
+            </button>
           </div>
         </div>
       </Modal>
@@ -166,9 +168,7 @@ export const DateTodo = (): JSX.Element => {
           </button>
         </div>
 
-        {isTodosEmpty && (
-          <div className={styles['todo-done']}>На сегодня планов нет</div>
-        )}
+        {isTodosEmpty && <div className={styles['todo-done']}>На сегодня планов нет</div>}
 
         {!isTodosEmpty && (
           <div className={styles['visible-todo-list']}>

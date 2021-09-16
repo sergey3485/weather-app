@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import { useClickOutside } from '../../hooks/useClickOutside';
 import { usePressOnKey } from '../../hooks/useKey';
@@ -18,18 +19,33 @@ export const Modal = (props: ModalProps) => {
   useClickOutside(modalWindow, onClose);
   usePressOnKey('Escape', onClose);
 
-  if (!open) {
-    return (null);
-  }
+  // if (!open) {
+  //   return (null);
+  // }
 
   return (
-    <div className={styles['modal-window']}>
-      <div
-        className={styles.shadow}
-      />
-      <div className={styles.modal} ref={modalWindow}>
-        {children}
-      </div>
+    <div>
+      {open && (
+        <div className={styles.shadow} />
+      )}
+      <CSSTransition
+        in={open}
+        timeout={200}
+        classNames={{
+          enterActive: styles['animation-enter-active'],
+          enter: styles['animation-enter'],
+          exit: styles['animation-exit'],
+          exitActive: styles['animation-exit-active'],
+        }}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className={styles['modal-window']}>
+          <div className={styles.modal} ref={modalWindow}>
+            {children}
+          </div>
+        </div>
+      </CSSTransition>
     </div>
   );
 };
