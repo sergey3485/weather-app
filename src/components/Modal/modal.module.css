@@ -34,7 +34,7 @@
 .animation-enter-active {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 1000ms, transform 1000ms;
+  transition: opacity 250ms, transform 250ms;
 }
 
 .animation-exit {
@@ -44,7 +44,7 @@
 .animation-exit-active {
   opacity: 0;
   transform: scale(0);
-  transition: opacity 1000ms, transform 1000ms;
+  transition: opacity 250ms, transform 250ms;
 }
 
 .animation-shadow-enter {
@@ -53,7 +53,7 @@
 
 .animation-shadow-enter-active {
   opacity: 1;
-  transition: opacity 1000ms;
+  transition: opacity 250ms;
 }
 
 .animation-shadow-exit {
@@ -62,5 +62,5 @@
 
 .animation-shadow-exit-active {
   opacity: 0;
-  transition: opacity 1000ms;
+  transition: opacity 250ms;
 }

@@ -154,19 +154,6 @@ export const fetchWeather = async (text: string): Promise<Weather> => {
   const fetchedData = await fetch(url);
   const commits = await fetchedData.json() as FetchedWeather;
   const weatherData = changeData(commits);
-  // const weatherData = fetch(url)
-  //   .then((data) => data.json())
-  //   .then((data: FetchedWeather): Weather => {
-  // const loc = `${data.nearest_area[0].region[0].value}, ${data.nearest_area[0].country[0].value}`
-
-  //     return {
-  //       position: loc,
-  //       icon: data.current_condition[0].weatherCode,
-  //       temperature: data.current_condition[0].temp_C,
-  //       weatherDescription: data.current_condition[0].weatherDesc[0].value,
-  //       hourlyWeather: [...changeTime(data.weather[0]), ...changeTime(data.weather[1])],
-  //     };
-  //   });
 
   return weatherData;
 };

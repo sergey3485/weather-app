@@ -19,15 +19,11 @@ export const Modal = (props: ModalProps) => {
   useClickOutside(modalWindow, onClose);
   usePressOnKey('Escape', onClose);
 
-  // if (!open) {
-  //   return (null);
-  // }
-
   return (
     <div>
       <CSSTransition
         in={open}
-        timeout={1000}
+        timeout={250}
         classNames={{
           enterActive: styles['animation-shadow-enter-active'],
           enter: styles['animation-shadow-enter'],
@@ -41,7 +37,7 @@ export const Modal = (props: ModalProps) => {
       </CSSTransition>
       <CSSTransition
         in={open}
-        timeout={1000}
+        timeout={250}
         classNames={{
           enterActive: styles['animation-enter-active'],
           enter: styles['animation-enter'],
