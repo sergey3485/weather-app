@@ -34,16 +34,33 @@
 .animation-enter-active {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 200ms, transform 200ms;
+  transition: opacity 1000ms, transform 1000ms;
 }
 
 .animation-exit {
   opacity: 1;
-  transform: scale(1);
 }
 
 .animation-exit-active {
   opacity: 0;
   transform: scale(0);
-  transition: opacity 200ms, transform 200ms;
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+.animation-shadow-enter {
+  opacity: 0;
+}
+
+.animation-shadow-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+
+.animation-shadow-exit {
+  opacity: 1;
+}
+
+.animation-shadow-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms;
 }

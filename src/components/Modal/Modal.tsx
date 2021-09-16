@@ -25,12 +25,23 @@ export const Modal = (props: ModalProps) => {
 
   return (
     <div>
-      {open && (
-        <div className={styles.shadow} />
-      )}
       <CSSTransition
         in={open}
-        timeout={200}
+        timeout={1000}
+        classNames={{
+          enterActive: styles['animation-shadow-enter-active'],
+          enter: styles['animation-shadow-enter'],
+          exit: styles['animation-shadow-exit'],
+          exitActive: styles['animation-shadow-exit-active'],
+        }}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className={styles.shadow} />
+      </CSSTransition>
+      <CSSTransition
+        in={open}
+        timeout={1000}
         classNames={{
           enterActive: styles['animation-enter-active'],
           enter: styles['animation-enter'],
