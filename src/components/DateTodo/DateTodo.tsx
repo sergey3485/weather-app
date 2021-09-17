@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RiCloseFill, RiMenu3Line, RiEdit2Fill } from 'react-icons/ri';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { Modal } from '../Modal';
 
@@ -118,29 +119,42 @@ export const DateTodo = (): JSX.Element => {
           </button>
           <div className={styles['modal-header']}>Todo`s editor</div>
           <div className={styles['modal-todo-list']}>
-            {modalTodos.map((data) => {
-              return (
-                <div className={styles['todo-item']}>
-                  <div className={styles['todo-time']}>{data.time}</div>
-                  {isEditing === data.text && (
-                    <input
-                      defaultValue={data.text}
-                      // eslint-disable-next-line jsx-a11y/no-autofocus
-                      autoFocus
-                      onKeyDown={saveChanges}
-                      onBlur={() => setIsEditing(false)}
-                    />
-                  )}
-                  {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
-                  <button type="button" className={styles['edit-todo']} onClick={() => setIsEditing(data.text)}>
-                    <RiEdit2Fill size={16} color="white" />
-                  </button>
-                  <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>
-                    Delete
-                  </button>
-                </div>
-              );
-            })}
+            <TransitionGroup component="ul">
+              {modalTodos.map((data) => {
+                return (
+                  <CSSTransition
+                    key={data.time}
+                    timeout={250}
+                    classNames={{
+                      enterActive: styles['animation-todo-item-enter-active'],
+                      enter: styles['animation-todo-item-enter'],
+                      exit: styles['animation-todo-item-exit'],
+                      exitActive: styles['animation-todo-item-exit-active'],
+                    }}
+                  >
+                    <div className={styles['todo-item']}>
+                      <div className={styles['todo-time']}>{data.time}</div>
+                      {isEditing === data.text && (
+                        <input
+                          defaultValue={data.text}
+                          // eslint-disable-next-line jsx-a11y/no-autofocus
+                          autoFocus
+                          onKeyDown={saveChanges}
+                          onBlur={() => setIsEditing(false)}
+                        />
+                      )}
+                      {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
+                      <button type="button" className={styles['edit-todo']} onClick={() => setIsEditing(data.text)}>
+                        <RiEdit2Fill size={16} color="white" />
+                      </button>
+                      <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>
+                        Delete
+                      </button>
+                    </div>
+                  </CSSTransition>
+                );
+              })}
+            </TransitionGroup>
             <button type="button" onClick={closeModal} className={styles['save-button']}>
               Save
             </button>
@@ -173,14 +187,25 @@ export const DateTodo = (): JSX.Element => {
         {!isTodosEmpty && (
           <div className={styles['visible-todo-list']}>
             <div className={styles['todo-list']} style={style}>
-              {todos.map((data) => {
-                return (
-                  <div className={styles['todo-item']}>
-                    <div className={styles['todo-time']}>{data.time}</div>
-                    <div className={styles['todo-text']}>{data.text}</div>
-                  </div>
-                );
-              })}
+              <TransitionGroup>
+                {todos.map((data) => {
+                  return (
+                    <CSSTransition
+                      key={data.time}
+                      timeout={400}
+                      classNames={{
+                        exit: styles['animation-main-todo-item-exit'],
+                        exitActive: styles['animation-main-todo-item-exit-active'],
+                      }}
+                    >
+                      <div className={styles['todo-item']}>
+                        <div className={styles['todo-time']}>{data.time}</div>
+                        <div className={styles['todo-text']}>{data.text}</div>
+                      </div>
+                    </CSSTransition>
+                  );
+                })}
+              </TransitionGroup>
             </div>
           </div>
         )}
