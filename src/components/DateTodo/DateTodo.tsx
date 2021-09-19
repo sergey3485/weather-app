@@ -3,10 +3,13 @@ import { RiCloseFill, RiMenu3Line, RiEdit2Fill } from 'react-icons/ri';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { Modal } from '../Modal';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Button } from '../Button';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
 import styles from './dateTodo.module.css';
+import { ButtonLogo } from '../ButtonLogo';
 
 export interface Todo {
   time: string;
@@ -61,6 +64,9 @@ export const DateTodo = (): JSX.Element => {
     transition: '1s',
   };
 
+  // eslint-disable-next-line no-console
+  console.log(styles);
+
   const closeModal = () => {
     setTodos(modalTodos);
     setIsOpen(false);
@@ -114,9 +120,9 @@ export const DateTodo = (): JSX.Element => {
     <div className={styles['container-date-todo']}>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <div className={styles['modal-container']}>
-          <button type="button" onClick={() => setIsOpen(false)} className={styles['close-modal-button']}>
+          <ButtonLogo handler={() => setIsOpen(false)} variant="close-modal">
             <RiCloseFill size={24} color="white" />
-          </button>
+          </ButtonLogo>
           <div className={styles['modal-header']}>Todo`s editor</div>
           <div className={styles['modal-todo-list']}>
             <TransitionGroup component="ul">
@@ -144,20 +150,20 @@ export const DateTodo = (): JSX.Element => {
                         />
                       )}
                       {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
-                      <button type="button" className={styles['edit-todo']} onClick={() => setIsEditing(data.text)}>
-                        <RiEdit2Fill size={16} color="white" />
-                      </button>
-                      <button type="button" className={styles['delete-button']} onClick={() => deleteTodo(data)}>
+                      <ButtonLogo variant="edit" handler={() => setIsEditing(data.text)}>
+                        <RiEdit2Fill size={8} color="white" />
+                      </ButtonLogo>
+                      <Button handler={() => deleteTodo(data)} variant="delete">
                         Delete
-                      </button>
+                      </Button>
                     </div>
                   </CSSTransition>
                 );
               })}
             </TransitionGroup>
-            <button type="button" onClick={closeModal} className={styles['save-button']}>
+            <Button handler={closeModal} variant="save">
               Save
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>
@@ -171,15 +177,15 @@ export const DateTodo = (): JSX.Element => {
       </div>
       <div className={styles['date-day']}>{getCurrentDate()}</div>
       <div className={styles['todo-container']}>
-        <div>
+        <div className={styles['menu-container']}>
           {!isTodosEmpty && (
-            <button className={styles['button-next']} type="button" onClick={onNext}>
+            <Button handler={onNext} variant="next">
               Next
-            </button>
+            </Button>
           )}
-          <button className={styles['button-menu']} type="button" onClick={openModal}>
+          <ButtonLogo variant="menu" handler={openModal}>
             <RiMenu3Line color="white" />
-          </button>
+          </ButtonLogo>
         </div>
 
         {isTodosEmpty && <div className={styles['todo-done']}>На сегодня планов нет</div>}
