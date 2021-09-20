@@ -5,6 +5,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Modal } from '../Modal';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from '../Button';
+import { Text } from '../Text';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
@@ -123,9 +124,9 @@ export const DateTodo = (): JSX.Element => {
           <ButtonLogo handler={() => setIsOpen(false)} variant="close-modal">
             <RiCloseFill size={24} color="white" />
           </ButtonLogo>
-          <div className={styles['modal-header']}>Todo`s editor</div>
+          <Text variant="modal-header">Todo`s editor</Text>
           <div className={styles['modal-todo-list']}>
-            <TransitionGroup component="ul">
+            <TransitionGroup>
               {modalTodos.map((data) => {
                 return (
                   <CSSTransition
@@ -139,7 +140,7 @@ export const DateTodo = (): JSX.Element => {
                     }}
                   >
                     <div className={styles['todo-item']}>
-                      <div className={styles['todo-time']}>{data.time}</div>
+                      <Text variant="todo-time">{data.time}</Text>
                       {isEditing === data.text && (
                         <input
                           defaultValue={data.text}
@@ -149,7 +150,7 @@ export const DateTodo = (): JSX.Element => {
                           onBlur={() => setIsEditing(false)}
                         />
                       )}
-                      {isEditing !== data.text && <div className={styles['todo-text']}>{data.text}</div>}
+                      {isEditing !== data.text && <Text variant="todo-text">{data.text}</Text>}
                       <ButtonLogo variant="edit" handler={() => setIsEditing(data.text)}>
                         <RiEdit2Fill size={8} color="white" />
                       </ButtonLogo>
@@ -168,14 +169,14 @@ export const DateTodo = (): JSX.Element => {
         </div>
       </Modal>
       <div>
-        <span className={styles['date-time']}>
+        <Text variant="date-time">
           <strong>{getCurrentHour(date).value}</strong>
-        </span>
-        <span className={styles['time-index']}>
+        </Text>
+        <Text variant="time-index">
           <strong>{getCurrentHour(date).ampm}</strong>
-        </span>
+        </Text>
       </div>
-      <div className={styles['date-day']}>{getCurrentDate()}</div>
+      <Text variant="date-day">{getCurrentDate()}</Text>
       <div className={styles['todo-container']}>
         <div className={styles['menu-container']}>
           {!isTodosEmpty && (
@@ -188,7 +189,7 @@ export const DateTodo = (): JSX.Element => {
           </ButtonLogo>
         </div>
 
-        {isTodosEmpty && <div className={styles['todo-done']}>На сегодня планов нет</div>}
+        {isTodosEmpty && <Text variant="todo-done">На сегодня планов нет</Text>}
 
         {!isTodosEmpty && (
           <div className={styles['visible-todo-list']}>
@@ -205,8 +206,8 @@ export const DateTodo = (): JSX.Element => {
                       }}
                     >
                       <div className={styles['todo-item']}>
-                        <div className={styles['todo-time']}>{data.time}</div>
-                        <div className={styles['todo-text']}>{data.text}</div>
+                        <Text variant="time">{data.time}</Text>
+                        <Text variant="todo-text">{data.text}</Text>
                       </div>
                     </CSSTransition>
                   );

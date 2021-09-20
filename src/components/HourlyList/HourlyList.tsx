@@ -2,6 +2,8 @@ import { HourlyWeather } from '../../utils/api';
 import { filterHourlyWeather } from '../../utils/filter';
 import { getCurrentHour } from '../../utils/time';
 
+import { Text } from '../Text';
+
 import { ICON_CODES } from '../../constants/weatherCodes';
 
 import styles from './hourlyList.module.css';
@@ -21,13 +23,13 @@ export const HourlyList = (props: HourlyListProps): JSX.Element => {
         return (
           <div className={styles['day-container']}>
             <div className={styles.day}>
-              <span>{time.value}</span>
-              <span className={styles['time-index']}>{` ${time.ampm}`}</span>
+              <Text variant="time">{time.value}</Text>
+              <Text variant="time-index">{` ${time.ampm}`}</Text>
             </div>
             <div className="day-icon">
               <img src={ICON_CODES[data.weatherCode]} alt="weather" className={styles.icon} />
             </div>
-            <div className={styles['day-temperature']}>{data.tempC}</div>
+            <Text variant="day-temperature">{data.tempC}</Text>
           </div>
         );
       })}
