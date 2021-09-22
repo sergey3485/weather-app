@@ -101,3 +101,33 @@
 .menu-container {
   display: flex;
 }
+
+.next {
+  margin-top: 48px;
+  margin-right: 24px;
+}
+
+.save {
+  margin-top: 8px;
+}
+
+.delete {
+  margin-left: auto;
+}
+
+.edit {
+  margin-left: 4px;
+  margin-right: 24px;
+}
+
+.menu {
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+.close {
+  margin-left: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

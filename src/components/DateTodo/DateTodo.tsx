@@ -121,7 +121,7 @@ export const DateTodo = (): JSX.Element => {
     <div className={styles['container-date-todo']}>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <div className={styles['modal-container']}>
-          <ButtonLogo handler={() => setIsOpen(false)} variant="close-modal">
+          <ButtonLogo onClick={() => setIsOpen(false)} variant="close-modal" className={styles.close}>
             <RiCloseFill size={24} color="white" />
           </ButtonLogo>
           <Text variant="modal-header">Todo`s editor</Text>
@@ -151,10 +151,10 @@ export const DateTodo = (): JSX.Element => {
                         />
                       )}
                       {isEditing !== data.text && <Text variant="todo-text">{data.text}</Text>}
-                      <ButtonLogo variant="edit" handler={() => setIsEditing(data.text)}>
+                      <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles.edit}>
                         <RiEdit2Fill size={8} color="white" />
                       </ButtonLogo>
-                      <Button handler={() => deleteTodo(data)} variant="delete">
+                      <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>
                         Delete
                       </Button>
                     </div>
@@ -162,7 +162,7 @@ export const DateTodo = (): JSX.Element => {
                 );
               })}
             </TransitionGroup>
-            <Button handler={closeModal} variant="save">
+            <Button onClick={closeModal} variant="save" className={styles.save}>
               Save
             </Button>
           </div>
@@ -180,11 +180,11 @@ export const DateTodo = (): JSX.Element => {
       <div className={styles['todo-container']}>
         <div className={styles['menu-container']}>
           {!isTodosEmpty && (
-            <Button handler={onNext} variant="next">
+            <Button onClick={onNext} variant="next" className={styles.next}>
               Next
             </Button>
           )}
-          <ButtonLogo variant="menu" handler={openModal}>
+          <ButtonLogo variant="menu" onClick={openModal} className={styles.menu}>
             <RiMenu3Line color="white" />
           </ButtonLogo>
         </div>

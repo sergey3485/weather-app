@@ -2,17 +2,22 @@ import * as React from 'react';
 
 import styles from './button.module.css';
 
-export interface ButtonProps {
-  variant: string,
-  children?: React.ReactNode,
-  handler?: () => void,
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: string;
+  children?: React.ReactNode;
 }
 
 export const Button = (props: ButtonProps) => {
-  const { children, handler, variant } = props;
+  const {
+    children,
+    variant,
+    type,
+    className = '',
+    ...other
+  } = props;
 
   return (
-    <button className={`${styles.button} ${styles[variant]}`} type="button" onClick={handler}>
+    <button className={`${styles.button} ${styles[variant]} ${className}`} type="button" {...other}>
       {children}
     </button>
   );
