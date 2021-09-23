@@ -124,7 +124,7 @@ export const DateTodo = (): JSX.Element => {
           <ButtonLogo onClick={() => setIsOpen(false)} variant="close-modal" className={styles.close}>
             <RiCloseFill size={24} color="white" />
           </ButtonLogo>
-          <Text variant="modal-header">Todo`s editor</Text>
+          <Text variant="h1">Todo`s editor</Text>
           <div className={styles['modal-todo-list']}>
             <TransitionGroup>
               {modalTodos.map((data) => {
@@ -139,21 +139,23 @@ export const DateTodo = (): JSX.Element => {
                       exitActive: styles['animation-todo-item-exit-active'],
                     }}
                   >
-                    <div className={styles['todo-item']}>
-                      <Text variant="todo-time">{data.time}</Text>
-                      {isEditing === data.text && (
-                        <input
-                          defaultValue={data.text}
-                          // eslint-disable-next-line jsx-a11y/no-autofocus
-                          autoFocus
-                          onKeyDown={saveChanges}
-                          onBlur={() => setIsEditing(false)}
-                        />
-                      )}
-                      {isEditing !== data.text && <Text variant="todo-text">{data.text}</Text>}
-                      <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles.edit}>
-                        <RiEdit2Fill size={8} color="white" />
-                      </ButtonLogo>
+                    <div className={styles['todo-item-modal']}>
+                      <div className={styles['todo-value']}>
+                        <Text variant="h2">{data.time}</Text>
+                        {isEditing === data.text && (
+                          <input
+                            defaultValue={data.text}
+                            //  eslint-disable-next-line jsx-a11y/no-autofocus
+                            autoFocus
+                            onKeyDown={saveChanges}
+                            onBlur={() => setIsEditing(false)}
+                          />
+                        )}
+                        {isEditing !== data.text && <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>}
+                        <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles['edit-text']}>
+                          <RiEdit2Fill size={8} color="white" />
+                        </ButtonLogo>
+                      </div>
                       <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>
                         Delete
                       </Button>
@@ -168,11 +170,11 @@ export const DateTodo = (): JSX.Element => {
           </div>
         </div>
       </Modal>
-      <div>
-        <Text variant="date-time">
+      <div className={styles['time-header']}>
+        <Text variant="h5">
           <strong>{getCurrentHour(date).value}</strong>
         </Text>
-        <Text variant="time-index">
+        <Text variant="text">
           <strong>{getCurrentHour(date).ampm}</strong>
         </Text>
       </div>
@@ -184,12 +186,12 @@ export const DateTodo = (): JSX.Element => {
               Next
             </Button>
           )}
-          <ButtonLogo variant="menu" onClick={openModal} className={styles.menu}>
+          <ButtonLogo variant="button" onClick={openModal} className={styles['menu-todo']}>
             <RiMenu3Line color="white" />
           </ButtonLogo>
         </div>
 
-        {isTodosEmpty && <Text variant="todo-done">На сегодня планов нет</Text>}
+        {isTodosEmpty && <Text variant="h2" className={styles['todo-done']}>На сегодня планов нет</Text>}
 
         {!isTodosEmpty && (
           <div className={styles['visible-todo-list']}>
@@ -206,8 +208,8 @@ export const DateTodo = (): JSX.Element => {
                       }}
                     >
                       <div className={styles['todo-item']}>
-                        <Text variant="time">{data.time}</Text>
-                        <Text variant="todo-text">{data.text}</Text>
+                        <Text variant="h2">{data.time}</Text>
+                        <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>
                       </div>
                     </CSSTransition>
                   );

@@ -17,6 +17,15 @@
   margin-top: 12px;
 }
 
+.todo-item-modal {
+  display: flex;
+  font-size: 20px;
+  margin-top: 12px;
+  align-self: start;
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   width: 16px;
   height: 16px;
@@ -67,8 +76,8 @@
   .todo-item {
     font-size: 16px;
     margin-top: 12px;
-    align-self: start;
   }
+
 
   .container-date-todo {
     margin-top: 16px;
@@ -100,34 +109,35 @@
 
 .menu-container {
   display: flex;
-}
-
-.next {
-  margin-top: 48px;
-  margin-right: 24px;
+  margin-top: 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 88px;
 }
 
 .save {
-  margin-top: 8px;
+  margin-top: 16px;
 }
 
-.delete {
-  margin-left: auto;
-}
-
-.edit {
+.edit-text {
   margin-left: 4px;
   margin-right: 24px;
 }
 
-.menu {
-  margin-top: auto;
-  margin-bottom: 8px;
-}
-
 .close {
-  margin-left: auto;
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.todo-text {
+  margin-left: 24px;
+}
+
+.todo-done {
+  margin-top: 12px;
+}
+
+.todo-value{
+  display: flex;
 }

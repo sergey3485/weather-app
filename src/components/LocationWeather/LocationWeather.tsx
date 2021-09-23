@@ -24,7 +24,7 @@ export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
         {iconPath ? <img src={iconPath} alt="weather" className={styles.logo} /> : <Skeleton width="100px" height="100px" />}
       </div>
       {weatherDescription ? (
-        <Text variant="weather">
+        <Text variant="h4">
           <strong>
             {weatherDescription}
           </strong>
@@ -32,13 +32,13 @@ export const LocationWeather = (props: LocationWeatherProps): JSX.Element => {
       )
         : <Skeleton width="200px" />}
       {location ? (
-        <Text variant="location">
+        <Text variant="h6">
           {location}
         </Text>
       )
         : <Skeleton width="200px" height="20px" />}
       {temperature ? (
-        <Text variant="temperature">
+        <Text variant="h4">
           <strong>
             {temperature}
             °
