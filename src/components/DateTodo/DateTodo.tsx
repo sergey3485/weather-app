@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { RiCloseFill, RiMenu3Line, RiEdit2Fill } from 'react-icons/ri';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
+import {
+  RiCloseFill,
+  RiMenu3Line,
+  RiEdit2Fill,
+  RiDeleteBinLine,
+} from 'react-icons/ri';
 import { Modal } from '../Modal';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from '../Button';
@@ -140,25 +145,25 @@ export const DateTodo = (): JSX.Element => {
                     }}
                   >
                     <div className={styles['todo-item-modal']}>
-                      <div className={styles['todo-value']}>
-                        <Text variant="h2">{data.time}</Text>
-                        {isEditing === data.text && (
-                          <input
-                            defaultValue={data.text}
-                            //  eslint-disable-next-line jsx-a11y/no-autofocus
-                            autoFocus
-                            onKeyDown={saveChanges}
-                            onBlur={() => setIsEditing(false)}
-                          />
-                        )}
-                        {isEditing !== data.text && <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>}
+                      <Text variant="h2">{data.time}</Text>
+                      {isEditing === data.text && (
+                        <input
+                          defaultValue={data.text}
+                          //  eslint-disable-next-line jsx-a11y/no-autofocus
+                          autoFocus
+                          onKeyDown={saveChanges}
+                          onBlur={() => setIsEditing(false)}
+                        />
+                      )}
+                      {isEditing !== data.text && <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>}
+                      <div className={styles['modal-menu']}>
                         <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles['edit-text']}>
-                          <RiEdit2Fill size={8} color="white" />
+                          <RiEdit2Fill size={20} color="white" />
                         </ButtonLogo>
+                        <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>
+                          <RiDeleteBinLine size={20} color="white" />
+                        </Button>
                       </div>
-                      <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>
-                        Delete
-                      </Button>
                     </div>
                   </CSSTransition>
                 );

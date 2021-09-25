@@ -24,6 +24,7 @@
   align-self: start;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .logo {
@@ -132,12 +133,15 @@
 
 .todo-text {
   margin-left: 24px;
+  margin-right: 24px;
+  width: 200px;
 }
 
 .todo-done {
   margin-top: 12px;
 }
 
-.todo-value{
+.modal-menu {
   display: flex;
+  margin-left: auto;
 }

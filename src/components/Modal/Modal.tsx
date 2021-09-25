@@ -20,7 +20,7 @@ export const Modal = (props: ModalProps) => {
   usePressOnKey('Escape', onClose);
 
   return (
-    <div>
+    <>
       <CSSTransition
         in={open}
         timeout={250}
@@ -53,6 +53,6 @@ export const Modal = (props: ModalProps) => {
           </div>
         </div>
       </CSSTransition>
-    </div>
+    </>
   );
 };
