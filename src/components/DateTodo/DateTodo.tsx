@@ -147,15 +147,18 @@ export const DateTodo = (): JSX.Element => {
                     <div className={styles['todo-item-modal']}>
                       <Text variant="h2">{data.time}</Text>
                       {isEditing === data.text && (
-                        <input
-                          defaultValue={data.text}
-                          //  eslint-disable-next-line jsx-a11y/no-autofocus
-                          autoFocus
-                          onKeyDown={saveChanges}
-                          onBlur={() => setIsEditing(false)}
-                        />
+                        <div className={styles['input-container']}>
+                          <input
+                            defaultValue={data.text}
+                            //  eslint-disable-next-line jsx-a11y/no-autofocus
+                            autoFocus
+                            onKeyDown={saveChanges}
+                            onBlur={() => setIsEditing(false)}
+                            className={styles['todo-input']}
+                          />
+                        </div>
                       )}
-                      {isEditing !== data.text && <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>}
+                      <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>
                       <div className={styles['modal-menu']}>
                         <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles['edit-text']}>
                           <RiEdit2Fill size={20} color="white" />
