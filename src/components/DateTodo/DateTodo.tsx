@@ -6,6 +6,7 @@ import {
   RiMenu3Line,
   RiEdit2Fill,
   RiDeleteBinLine,
+  RiPlayListAddFill,
 } from 'react-icons/ri';
 import { Modal } from '../Modal';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,40 +21,49 @@ import { ButtonLogo } from '../ButtonLogo';
 export interface Todo {
   time: string;
   text: string;
+  done: boolean;
 }
 
 const initialTodo: Todo[] = [
   {
     time: '12:03',
     text: 'Посетить врача',
+    done: false,
   },
   {
     time: '13:00',
     text: 'Пообедать',
+    done: false,
   },
   {
     time: '14:00',
     text: 'Подразнить попугаев',
+    done: false,
   },
   {
     time: '15:10',
     text: 'Помыть посуду',
+    done: false,
   },
   {
     time: '16:20',
     text: 'Сделать таски',
+    done: false,
   },
   {
     time: '17:05',
     text: 'Доебаться до Руслана',
+    done: false,
   },
   {
     time: '18:25',
     text: 'Послушать истории от Деда',
+    done: false,
   },
   {
     time: '19:02',
     text: 'Поиграть в лол',
+    done: false,
   },
 ];
 
@@ -64,14 +74,12 @@ export const DateTodo = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [modalTodos, setModalTodos] = React.useState(initialTodo);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
+  const [text, setText] = React.useState('');
 
   const style = {
     transform: `translateY(-${step * 36}px)`,
     transition: '1s',
   };
-
-  // eslint-disable-next-line no-console
-  console.log(styles);
 
   const closeModal = () => {
     setTodos(modalTodos);
@@ -95,7 +103,7 @@ export const DateTodo = (): JSX.Element => {
     setIsOpen(true);
   };
 
-  const saveChanges = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const saveChanges = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key !== 'Enter') return;
 
     if (isEditing !== false) {
@@ -117,7 +125,26 @@ export const DateTodo = (): JSX.Element => {
 
   const onNext = () => {
     if (step === todos.length) return;
+    todos[step].done = true;
     setStep((prevStep) => prevStep + 1);
+  };
+
+  const changeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = event.currentTarget.value;
+    setText(newText);
+  };
+
+  const addTodo = () => {
+    if (text === '') return;
+
+    const newTodo: Todo = {
+      text,
+      time: `${getCurrentHour(date).value} ${getCurrentHour(date).ampm}`,
+      done: false,
+    };
+
+    setModalTodos([...modalTodos, newTodo]);
+    setText('');
   };
 
   const isTodosEmpty = todos.length === 0;
@@ -130,12 +157,24 @@ export const DateTodo = (): JSX.Element => {
             <RiCloseFill size={24} color="white" />
           </ButtonLogo>
           <Text variant="h1">Todo`s editor</Text>
+          <div className={styles['add-header']}>
+            <ButtonLogo variant="menu" onClick={addTodo}>
+              <RiPlayListAddFill size={24} color="white" />
+            </ButtonLogo>
+            <textarea
+              placeholder="Add Todo"
+              value={text}
+              onChange={changeText}
+              className={styles['add-todo']}
+            />
+          </div>
           <div className={styles['modal-todo-list']}>
             <TransitionGroup>
-              {modalTodos.map((data) => {
+              {modalTodos.map((data, index) => {
                 return (
                   <CSSTransition
-                    key={data.time}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`todo-${index}`}
                     timeout={250}
                     classNames={{
                       enterActive: styles['animation-todo-item-enter-active'],
@@ -145,20 +184,20 @@ export const DateTodo = (): JSX.Element => {
                     }}
                   >
                     <div className={styles['todo-item-modal']}>
-                      <Text variant="h2">{data.time}</Text>
-                      {isEditing === data.text && (
-                        <div className={styles['input-container']}>
-                          <input
+                      <Text variant="h2" className={styles['time-modal']}>{data.time}</Text>
+                      <div className={styles['todo-value']}>
+                        {isEditing === data.text && (
+                          <textarea
                             defaultValue={data.text}
-                            //  eslint-disable-next-line jsx-a11y/no-autofocus
+                            // eslint-disable-next-line jsx-a11y/no-autofocus
                             autoFocus
                             onKeyDown={saveChanges}
                             onBlur={() => setIsEditing(false)}
                             className={styles['todo-input']}
                           />
-                        </div>
-                      )}
-                      <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>
+                        )}
+                        <Text variant="h2" className={styles[`todo-text-modal${data.done ? '-done' : ''}`]}>{data.text}</Text>
+                      </div>
                       <div className={styles['modal-menu']}>
                         <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles['edit-text']}>
                           <RiEdit2Fill size={20} color="white" />
@@ -205,10 +244,11 @@ export const DateTodo = (): JSX.Element => {
           <div className={styles['visible-todo-list']}>
             <div className={styles['todo-list']} style={style}>
               <TransitionGroup>
-                {todos.map((data) => {
+                {todos.map((data, index) => {
                   return (
                     <CSSTransition
-                      key={data.time}
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={`todo-${index}`}
                       timeout={400}
                       classNames={{
                         exit: styles['animation-main-todo-item-exit'],

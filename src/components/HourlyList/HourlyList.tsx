@@ -21,7 +21,7 @@ export const HourlyList = (props: HourlyListProps): JSX.Element => {
         const time = getCurrentHour(data.time as Date);
 
         return (
-          <div className={styles['day-container']}>
+          <div className={styles['day-container']} key={`${time.value} ${time.ampm}`}>
             <div className={styles.day}>
               <Text variant="h2">{time.value}</Text>
               <Text variant="h3">{` ${time.ampm}`}</Text>
@@ -29,7 +29,10 @@ export const HourlyList = (props: HourlyListProps): JSX.Element => {
             <div className="day-icon">
               <img src={ICON_CODES[data.weatherCode]} alt="weather" className={styles.icon} />
             </div>
-            <Text variant="text">{data.tempC}</Text>
+            <Text variant="text">
+              {data.tempC}
+              °
+            </Text>
           </div>
         );
       })}
