@@ -162,7 +162,7 @@ export const DateTodo = (): JSX.Element => {
               <RiPlayListAddFill size={24} color="white" />
             </ButtonLogo>
             <textarea
-              placeholder="Add Todo"
+              placeholder="   + Add Todo"
               value={text}
               onChange={changeText}
               className={styles['add-todo']}

@@ -175,12 +175,36 @@
   resize: none;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 20px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.089);
+  border-radius: 10px;
   outline: none;
-  background: #161616;
+  background: rgba(255, 255, 255, 0.034);
   color: white;
+  height: 32px;
+  margin-left: 32px;
 }
 
 .add-header {
   display: flex;
+  margin-top: 16px;
+}
+
+@media (min-width: 320px) and (max-width: 375px) {
+  
+  .todo-value {
+    width: 140px;
+  }
+
+  .modal-container {
+    padding: 8px;
+  }
+
+  .time-modal{
+    margin-right: 8px;
+  }
+
+  .modal-menu {
+    margin-left: 8px;
+  }
+
 }
