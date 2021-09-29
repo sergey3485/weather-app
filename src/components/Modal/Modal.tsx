@@ -10,13 +10,18 @@ interface ModalProps {
   open: boolean;
   children: React.ReactNode;
   onClose: () => void;
+  modalContentRef: React.RefObject<HTMLElement | null>;
 }
 
 export const Modal = (props: ModalProps) => {
-  const { open, children, onClose } = props;
-  const modalWindow = React.useRef<HTMLDivElement>(null);
+  const {
+    open,
+    children,
+    onClose,
+    modalContentRef,
+  } = props;
 
-  useClickOutside(modalWindow, onClose);
+  useClickOutside(modalContentRef, onClose);
   usePressOnKey('Escape', onClose);
 
   return (
@@ -48,9 +53,7 @@ export const Modal = (props: ModalProps) => {
         unmountOnExit
       >
         <div className={styles['modal-window']}>
-          <div className={styles.modal} ref={modalWindow}>
-            {children}
-          </div>
+          {children}
         </div>
       </CSSTransition>
     </>

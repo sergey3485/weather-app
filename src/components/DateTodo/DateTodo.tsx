@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import uuid from 'react-native-uuid';
 
 import {
   RiCloseFill,
@@ -19,6 +20,7 @@ import styles from './dateTodo.module.css';
 import { ButtonLogo } from '../ButtonLogo';
 
 export interface Todo {
+  id: string;
   time: string;
   text: string;
   done: boolean;
@@ -26,41 +28,49 @@ export interface Todo {
 
 const initialTodo: Todo[] = [
   {
+    id: uuid.v4() as string,
     time: '12:03',
     text: 'Посетить врача',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '13:00',
     text: 'Пообедать',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '14:00',
     text: 'Подразнить попугаев',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '15:10',
     text: 'Помыть посуду',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '16:20',
     text: 'Сделать таски',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '17:05',
     text: 'Доебаться до Руслана',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '18:25',
     text: 'Послушать истории от Деда',
     done: false,
   },
   {
+    id: uuid.v4() as string,
     time: '19:02',
     text: 'Поиграть в лол',
     done: false,
@@ -138,6 +148,7 @@ export const DateTodo = (): JSX.Element => {
     if (text === '') return;
 
     const newTodo: Todo = {
+      id: uuid.v4() as string,
       text,
       time: `${getCurrentHour(date).value} ${getCurrentHour(date).ampm}`,
       done: false,
@@ -148,11 +159,12 @@ export const DateTodo = (): JSX.Element => {
   };
 
   const isTodosEmpty = todos.length === 0;
+  const modalWindow = React.useRef<HTMLDivElement>(null);
 
   return (
     <div className={styles['container-date-todo']}>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <div className={styles['modal-container']}>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)} modalContentRef={modalWindow}>
+        <div className={styles['modal-container']} ref={modalWindow}>
           <ButtonLogo onClick={() => setIsOpen(false)} variant="close-modal" className={styles.close}>
             <RiCloseFill size={24} color="white" />
           </ButtonLogo>
@@ -170,12 +182,11 @@ export const DateTodo = (): JSX.Element => {
           </div>
           <div className={styles['modal-todo-list']}>
             <TransitionGroup>
-              {modalTodos.map((data, index) => {
+              {modalTodos.map((data) => {
                 return (
                   <CSSTransition
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={`todo-${index}`}
-                    timeout={250}
+                    key={data.id}
+                    timeout={400}
                     classNames={{
                       enterActive: styles['animation-todo-item-enter-active'],
                       enter: styles['animation-todo-item-enter'],
@@ -244,11 +255,10 @@ export const DateTodo = (): JSX.Element => {
           <div className={styles['visible-todo-list']}>
             <div className={styles['todo-list']} style={style}>
               <TransitionGroup>
-                {todos.map((data, index) => {
+                {todos.map((data) => {
                   return (
                     <CSSTransition
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={`todo-${index}`}
+                      key={data.id}
                       timeout={400}
                       classNames={{
                         exit: styles['animation-main-todo-item-exit'],

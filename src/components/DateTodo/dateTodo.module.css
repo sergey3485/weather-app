@@ -21,10 +21,9 @@
   display: flex;
   font-size: 20px;
   margin-top: 12px;
-  align-self: start;
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: baseline;
+  align-content: center;
 }
 
 .logo {
@@ -37,6 +36,9 @@
   color: white;
   padding: 24px;
   position: relative;
+  margin: auto;
+  max-width: 620px;
+  width: 100%;
 }
 
 .modal-todo-list {
@@ -66,8 +68,8 @@
 
   .button-next {
     font-size: 20px;
-  margin-top: 30px;
-  margin-right: 15px;
+    margin-top: 30px;
+    margin-right: 15px;
   }
 
   .todo-text {
@@ -141,7 +143,7 @@
 
 .modal-menu {
   display: flex;
-  margin-left: 24px;
+  margin-left: auto;
 }
 
 .todo-input {
@@ -160,7 +162,6 @@
 
 .todo-value {
   position: relative;
-  width: 220px;
 }
 
 .time-modal{
@@ -187,24 +188,4 @@
 .add-header {
   display: flex;
   margin-top: 16px;
-}
-
-@media (min-width: 320px) and (max-width: 375px) {
-  
-  .todo-value {
-    width: 140px;
-  }
-
-  .modal-container {
-    padding: 8px;
-  }
-
-  .time-modal{
-    margin-right: 8px;
-  }
-
-  .modal-menu {
-    margin-left: 8px;
-  }
-
 }
