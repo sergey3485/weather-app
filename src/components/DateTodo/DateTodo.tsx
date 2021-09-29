@@ -29,49 +29,49 @@ export interface Todo {
 const initialTodo: Todo[] = [
   {
     id: uuid.v4() as string,
-    time: '12:03',
+    time: '12:03am',
     text: 'Посетить врача',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '13:00',
+    time: '01:00pm',
     text: 'Пообедать',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '14:00',
+    time: '02:00pm',
     text: 'Подразнить попугаев',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '15:10',
+    time: '03:10pm',
     text: 'Помыть посуду',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '16:20',
+    time: '04:20pm',
     text: 'Сделать таски',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '17:05',
+    time: '05:05pm',
     text: 'Доебаться до Руслана',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '18:25',
+    time: '06:25pm',
     text: 'Послушать истории от Деда',
     done: false,
   },
   {
     id: uuid.v4() as string,
-    time: '19:02',
+    time: '07:02pm',
     text: 'Поиграть в лол',
     done: false,
   },
@@ -195,7 +195,8 @@ export const DateTodo = (): JSX.Element => {
                     }}
                   >
                     <div className={styles['todo-item-modal']}>
-                      <Text variant="h2" className={styles['time-modal']}>{data.time}</Text>
+                      <Text variant="h2">{data.time.slice(0, data.time.length - 2)}</Text>
+                      <Text variant="h3" className={styles['time-modal']}>{data.time.slice(data.time.length - 2, data.time.length)}</Text>
                       <div className={styles['todo-value']}>
                         {isEditing === data.text && (
                           <textarea
@@ -266,7 +267,8 @@ export const DateTodo = (): JSX.Element => {
                       }}
                     >
                       <div className={styles['todo-item']}>
-                        <Text variant="h2">{data.time}</Text>
+                        <Text variant="h2">{data.time.slice(0, data.time.length - 2)}</Text>
+                        <Text variant="h3" className={styles.time}>{data.time.slice(data.time.length - 2, data.time.length)}</Text>
                         <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>
                       </div>
                     </CSSTransition>
