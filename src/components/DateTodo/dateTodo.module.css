@@ -40,6 +40,7 @@
   margin: auto;
   max-width: 620px;
   width: 100%;
+  overflow: hidden;
 }
 
 .modal-todo-list {
@@ -178,10 +179,12 @@
   background: rgba(255, 255, 255, 0.034);
   color: white;
   height: 32px;
-  margin-left: 32px;
+  width: 100%;
+  margin-right: 24px;
 }
 
 .add-header {
   display: flex;
   margin-top: 16px;
+  align-items: center;
 }

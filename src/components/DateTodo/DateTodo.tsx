@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import uuid from 'react-native-uuid';
+import * as uuid from 'uuid';
 
 import {
   RiCloseFill,
@@ -21,57 +21,57 @@ import { ButtonLogo } from '../ButtonLogo';
 
 export interface Todo {
   id: string;
-  time: string;
+  time: Date;
   text: string;
   done: boolean;
 }
 
 const initialTodo: Todo[] = [
   {
-    id: uuid.v4() as string,
-    time: '12:03am',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Посетить врача',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '01:00pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Пообедать',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '02:00pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Подразнить попугаев',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '03:10pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Помыть посуду',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '04:20pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Сделать таски',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '05:05pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Доебаться до Руслана',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '06:25pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Послушать истории от Деда',
     done: false,
   },
   {
-    id: uuid.v4() as string,
-    time: '07:02pm',
+    id: uuid.v4(),
+    time: new Date(),
     text: 'Поиграть в лол',
     done: false,
   },
@@ -148,9 +148,9 @@ export const DateTodo = (): JSX.Element => {
     if (text === '') return;
 
     const newTodo: Todo = {
-      id: uuid.v4() as string,
+      id: uuid.v4(),
       text,
-      time: `${getCurrentHour(date).value} ${getCurrentHour(date).ampm}`,
+      time: date,
       done: false,
     };
 
@@ -170,15 +170,15 @@ export const DateTodo = (): JSX.Element => {
           </ButtonLogo>
           <Text variant="h1">Todo`s editor</Text>
           <div className={styles['add-header']}>
-            <ButtonLogo variant="menu" onClick={addTodo}>
-              <RiPlayListAddFill size={24} color="white" />
-            </ButtonLogo>
             <textarea
               placeholder="   + Add Todo"
               value={text}
               onChange={changeText}
               className={styles['add-todo']}
             />
+            <ButtonLogo variant="menu" onClick={addTodo}>
+              <RiPlayListAddFill size={32} color="white" />
+            </ButtonLogo>
           </div>
           <div className={styles['modal-todo-list']}>
             <TransitionGroup>
@@ -195,8 +195,8 @@ export const DateTodo = (): JSX.Element => {
                     }}
                   >
                     <div className={styles['todo-item-modal']}>
-                      <Text variant="h2">{data.time.slice(0, data.time.length - 2)}</Text>
-                      <Text variant="h3" className={styles['time-modal']}>{data.time.slice(data.time.length - 2, data.time.length)}</Text>
+                      <Text variant="h2">{getCurrentHour(data.time).value}</Text>
+                      <Text variant="h3" className={styles['time-modal']}>{getCurrentHour(data.time).ampm}</Text>
                       <div className={styles['todo-value']}>
                         {isEditing === data.text && (
                           <textarea
@@ -267,8 +267,8 @@ export const DateTodo = (): JSX.Element => {
                       }}
                     >
                       <div className={styles['todo-item']}>
-                        <Text variant="h2">{data.time.slice(0, data.time.length - 2)}</Text>
-                        <Text variant="h3" className={styles.time}>{data.time.slice(data.time.length - 2, data.time.length)}</Text>
+                        <Text variant="h2">{getCurrentHour(data.time).value}</Text>
+                        <Text variant="h3" className={styles.time}>{getCurrentHour(data.time).ampm}</Text>
                         <Text variant="h2" className={styles['todo-text']}>{data.text}</Text>
                       </div>
                     </CSSTransition>
