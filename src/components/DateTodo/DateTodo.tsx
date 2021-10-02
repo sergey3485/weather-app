@@ -7,19 +7,12 @@ import { Modal } from '../Modal';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from '../Button';
 import { Text } from '../Text';
-import { ModalContent } from '../ModalContent';
+import { ModalContent, Todo } from '../ModalContent';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
 import styles from './dateTodo.module.css';
 import { ButtonLogo } from '../ButtonLogo';
-
-export interface Todo {
-  id: string;
-  time: Date;
-  text: string;
-  done: boolean;
-}
 
 const initialTodo: Todo[] = [
   {
