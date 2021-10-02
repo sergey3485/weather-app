@@ -2,17 +2,12 @@ import * as React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import * as uuid from 'uuid';
 
-import {
-  RiCloseFill,
-  RiMenu3Line,
-  RiEdit2Fill,
-  RiDeleteBinLine,
-  RiPlayListAddFill,
-} from 'react-icons/ri';
+import { RiMenu3Line } from 'react-icons/ri';
 import { Modal } from '../Modal';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from '../Button';
 import { Text } from '../Text';
+import { ModalContent } from '../ModalContent';
 
 import { getCurrentHour, getCurrentDate } from '../../utils/time';
 
@@ -92,8 +87,14 @@ export const DateTodo = (): JSX.Element => {
   };
 
   const closeModal = () => {
-    setTodos(modalTodos);
-    setIsOpen(false);
+    if (modalTodos.findIndex((data) => data.done === false) === -1) {
+      setTodos(modalTodos);
+      setIsOpen(false);
+    } else {
+      setStep(modalTodos.findIndex((data) => data.done === false));
+      setTodos(modalTodos);
+      setIsOpen(false);
+    }
   };
 
   React.useEffect(() => {
@@ -134,7 +135,7 @@ export const DateTodo = (): JSX.Element => {
   };
 
   const onNext = () => {
-    if (step === todos.length) return;
+    if (step >= todos.length) return;
     todos[step].done = true;
     setStep((prevStep) => prevStep + 1);
   };
@@ -157,77 +158,30 @@ export const DateTodo = (): JSX.Element => {
     setModalTodos([...modalTodos, newTodo]);
     setText('');
   };
+  const close = () => setIsOpen(false);
+  const endEditing = () => setIsEditing(false);
+  const startEditing = (data:string) => setIsEditing(data);
 
   const isTodosEmpty = todos.length === 0;
   const modalWindow = React.useRef<HTMLDivElement>(null);
 
   return (
     <div className={styles['container-date-todo']}>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)} modalContentRef={modalWindow}>
-        <div className={styles['modal-container']} ref={modalWindow}>
-          <ButtonLogo onClick={() => setIsOpen(false)} variant="close-modal" className={styles.close}>
-            <RiCloseFill size={24} color="white" />
-          </ButtonLogo>
-          <Text variant="h1">Todo`s editor</Text>
-          <div className={styles['add-header']}>
-            <textarea
-              placeholder="   + Add Todo"
-              value={text}
-              onChange={changeText}
-              className={styles['add-todo']}
-            />
-            <ButtonLogo variant="menu" onClick={addTodo}>
-              <RiPlayListAddFill size={32} color="white" />
-            </ButtonLogo>
-          </div>
-          <div className={styles['modal-todo-list']}>
-            <TransitionGroup>
-              {modalTodos.map((data) => {
-                return (
-                  <CSSTransition
-                    key={data.id}
-                    timeout={400}
-                    classNames={{
-                      enterActive: styles['animation-todo-item-enter-active'],
-                      enter: styles['animation-todo-item-enter'],
-                      exit: styles['animation-todo-item-exit'],
-                      exitActive: styles['animation-todo-item-exit-active'],
-                    }}
-                  >
-                    <div className={styles['todo-item-modal']}>
-                      <Text variant="h2">{getCurrentHour(data.time).value}</Text>
-                      <Text variant="h3" className={styles['time-modal']}>{getCurrentHour(data.time).ampm}</Text>
-                      <div className={styles['todo-value']}>
-                        {isEditing === data.text && (
-                          <textarea
-                            defaultValue={data.text}
-                            // eslint-disable-next-line jsx-a11y/no-autofocus
-                            autoFocus
-                            onKeyDown={saveChanges}
-                            onBlur={() => setIsEditing(false)}
-                            className={styles['todo-input']}
-                          />
-                        )}
-                        <Text variant="h2" className={styles[`todo-text-modal${data.done ? '-done' : ''}`]}>{data.text}</Text>
-                      </div>
-                      <div className={styles['modal-menu']}>
-                        <ButtonLogo variant="edit" onClick={() => setIsEditing(data.text)} className={styles['edit-text']}>
-                          <RiEdit2Fill size={20} color="white" />
-                        </ButtonLogo>
-                        <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>
-                          <RiDeleteBinLine size={20} color="white" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CSSTransition>
-                );
-              })}
-            </TransitionGroup>
-            <Button onClick={closeModal} variant="save" className={styles.save}>
-              Save
-            </Button>
-          </div>
-        </div>
+      <Modal open={isOpen} onClose={close} modalContentRef={modalWindow}>
+        <ModalContent
+          text={text}
+          changeText={changeText}
+          close={close}
+          closeModal={closeModal}
+          addTodo={addTodo}
+          isEditing={isEditing}
+          modalTodos={modalTodos}
+          saveChanges={saveChanges}
+          startEditing={startEditing}
+          endEditing={endEditing}
+          deleteTodo={deleteTodo}
+          modalWindow={modalWindow}
+        />
       </Modal>
       <div className={styles['time-header']}>
         <Text variant="h5">
