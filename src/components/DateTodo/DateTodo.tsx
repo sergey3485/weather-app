@@ -55,10 +55,10 @@ export const DateTodo = (): JSX.Element => {
   const close = () => setIsOpen(false);
 
   const save = (newTodos: Todo[]) => {
-    setStep(0);
     setTodos(newTodos);
     const filter = newTodos.filter((data) => data.done === false);
     setFiltredTodos(filter);
+    setStep(0);
   };
 
   const isTodosEmpty = todos.length === 0;

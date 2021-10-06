@@ -99,13 +99,63 @@
   resize: none;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.089);
+  border: none;
   border-radius: 10px;
   outline: none;
-  background: rgba(255, 255, 255, 0.034);
+  background: none;
   color: white;
   height: 32px;
   width: 100%;
+}
+.date-input {
+  appearance: none;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  border:none;
+  outline: none;
+  background: none;
+  color: white;
+  height: 32px;
+  width: 44px;
+}
+.date-input {
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	appearance: textfield;
+}
+
+.date-input ::-webkit-outer-spin-button,
+.date-input ::-webkit-inner-spin-button {
+	display: none;
+}
+
+.date-index {
+  width: max-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: 0;
+  font-family: inherit;
+  line-height: inherit;
+  color: white;
+}
+
+.date-index:invalid:not(:focus) {
+  color: red;
+}
+.date-index:invalid:focus {
+  color: blue;
+}
+.date-index:focus option {
+  color:blue;
+}
+
+.input-header {
+  display: flex;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.089);
+  border-radius: 10px;
+  background: rgba(50, 50, 50, 1);
   margin-right: 24px;
 }
 

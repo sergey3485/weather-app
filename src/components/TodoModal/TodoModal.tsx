@@ -42,6 +42,9 @@ export const TodoModal = (props: TodoModalProps) => {
   const [text, setText] = React.useState('');
   const [modalTodos, setModalTodos] = React.useState(todos);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
+  const [hour, setHour] = React.useState<number>(+getCurrentHour(new Date()).value.slice(0, 2));
+  const [min, setMin] = React.useState<number>(+getCurrentHour(new Date()).value.slice(3, 5));
+  const [timeIndex, setTimeIndex] = React.useState('am');
 
   const modalWindowRef = React.useRef<HTMLDivElement>(null);
 
@@ -68,15 +71,21 @@ export const TodoModal = (props: TodoModalProps) => {
   const addTodo = () => {
     if (text === '') return;
 
+    const dateHour = hour === 12 ? 0 : hour;
+
+    const time = new Date().setHours(timeIndex === 'am' ? dateHour : dateHour + 12, min);
+
     const newTodo: Todo = {
       id: uuid.v4(),
       text,
-      time: new Date(),
+      time: new Date(time),
       done: false,
     };
 
     setModalTodos([...modalTodos, newTodo]);
     setText('');
+    setHour(+getCurrentHour(new Date()).value.slice(0, 2));
+    setMin(+getCurrentHour(new Date()).value.slice(3, 5));
   };
 
   const editTodo = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -87,6 +96,7 @@ export const TodoModal = (props: TodoModalProps) => {
       const newTodo = {
         ...modalTodos[todoIndex],
         text: event.currentTarget.value,
+        done: false,
       };
 
       setModalTodos([
@@ -104,6 +114,21 @@ export const TodoModal = (props: TodoModalProps) => {
     onClose();
   };
 
+  const changeHour = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newHour = +event.currentTarget.value;
+    setHour(newHour);
+  };
+
+  const changeMinutes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMinutes = +event.currentTarget.value;
+    setMin(newMinutes);
+  };
+
+  const changeTimeIndex = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newTimeIndex = event.currentTarget.value;
+    setTimeIndex(newTimeIndex);
+  };
+
   return (
     <Modal modalContentRef={modalWindowRef} open={isOpen} onClose={onClose}>
       <div className={styles['modal-container']} ref={modalWindowRef}>
@@ -112,12 +137,27 @@ export const TodoModal = (props: TodoModalProps) => {
         </ButtonLogo>
         <Text variant="h1">Todo`s editor</Text>
         <div className={styles['add-header']}>
-          <textarea
-            placeholder="   + Add Todo"
-            value={text}
-            onChange={changeText}
-            className={styles['add-todo']}
-          />
+          <div className={styles['input-header']}>
+            <input type="number" className={styles['date-input']} onChange={changeHour} max={12} min={0} placeholder={getCurrentHour(new Date()).value.slice(0, 2)} />
+            <input type="number" className={styles['date-input']} onChange={changeMinutes} max={59} min={0} placeholder={getCurrentHour(new Date()).value.slice(3, 5)} />
+            <select onChange={changeTimeIndex} className={styles['date-index']}>
+              <option disabled selected hidden value="am">
+                am
+              </option>
+              <option value="am">
+                am
+              </option>
+              <option value="pm">
+                pm
+              </option>
+            </select>
+            <textarea
+              placeholder="   + Add Todo"
+              value={text}
+              onChange={changeText}
+              className={styles['add-todo']}
+            />
+          </div>
           <ButtonLogo variant="menu" onClick={addTodo}>
             <RiPlayListAddFill size={32} color="white" />
           </ButtonLogo>
