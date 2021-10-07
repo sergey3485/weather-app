@@ -8,6 +8,7 @@ import {
   RiDeleteBinLine,
   RiPlayListAddFill,
 } from 'react-icons/ri';
+
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Modal } from '../Modal';
@@ -29,6 +30,7 @@ interface TodoModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (newTodos: Todo[]) => void;
+  currentTime: Date;
 }
 
 export const TodoModal = (props: TodoModalProps) => {
@@ -37,14 +39,15 @@ export const TodoModal = (props: TodoModalProps) => {
     onClose,
     onSave,
     isOpen,
+    currentTime,
   } = props;
 
   const [text, setText] = React.useState('');
   const [modalTodos, setModalTodos] = React.useState(todos);
   const [isEditing, setIsEditing] = React.useState<string | boolean>(false);
-  const [hour, setHour] = React.useState<number>(+getCurrentHour(new Date()).value.slice(0, 2));
-  const [min, setMin] = React.useState<number>(+getCurrentHour(new Date()).value.slice(3, 5));
-  const [timeIndex, setTimeIndex] = React.useState('am');
+  const [hour, setHour] = React.useState<number>();
+  const [min, setMin] = React.useState<number>();
+  const [timeIndex, setTimeIndex] = React.useState(getCurrentHour(currentTime).ampm);
 
   const modalWindowRef = React.useRef<HTMLDivElement>(null);
 
@@ -70,10 +73,12 @@ export const TodoModal = (props: TodoModalProps) => {
 
   const addTodo = () => {
     if (text === '') return;
-
     const dateHour = hour === 12 ? 0 : hour;
 
-    const time = new Date().setHours(timeIndex === 'am' ? dateHour : dateHour + 12, min);
+    const currentHour = dateHour ?? +getCurrentHour(currentTime).value.slice(0, 2);
+    const currentMin = min ?? +getCurrentHour(currentTime).value.slice(3, 5);
+
+    const time = new Date().setHours(timeIndex === 'AM' ? currentHour : currentHour + 12, currentMin);
 
     const newTodo: Todo = {
       id: uuid.v4(),
@@ -84,8 +89,9 @@ export const TodoModal = (props: TodoModalProps) => {
 
     setModalTodos([...modalTodos, newTodo]);
     setText('');
-    setHour(+getCurrentHour(new Date()).value.slice(0, 2));
-    setMin(+getCurrentHour(new Date()).value.slice(3, 5));
+    setHour(undefined);
+    setMin(undefined);
+    setTimeIndex(getCurrentHour(currentTime).ampm);
   };
 
   const editTodo = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -138,25 +144,29 @@ export const TodoModal = (props: TodoModalProps) => {
         <Text variant="h1">Todo`s editor</Text>
         <div className={styles['add-header']}>
           <div className={styles['input-header']}>
-            <input type="number" className={styles['date-input']} onChange={changeHour} max={12} min={0} placeholder={getCurrentHour(new Date()).value.slice(0, 2)} />
-            <input type="number" className={styles['date-input']} onChange={changeMinutes} max={59} min={0} placeholder={getCurrentHour(new Date()).value.slice(3, 5)} />
-            <select onChange={changeTimeIndex} className={styles['date-index']}>
-              <option disabled selected hidden value="am">
-                am
-              </option>
-              <option value="am">
-                am
-              </option>
-              <option value="pm">
-                pm
-              </option>
-            </select>
-            <textarea
-              placeholder="   + Add Todo"
-              value={text}
-              onChange={changeText}
-              className={styles['add-todo']}
+            <input
+              type="number"
+              className={styles['date-input']}
+              onChange={changeHour}
+              max={12}
+              min={0}
+              placeholder={getCurrentHour(currentTime).value.slice(0, 2)}
+              value={hour ?? ''}
             />
+            <input
+              type="number"
+              className={styles['date-input']}
+              onChange={changeMinutes}
+              max={59}
+              min={0}
+              placeholder={getCurrentHour(currentTime).value.slice(3, 5)}
+              value={min ?? ''}
+            />
+            <select onChange={changeTimeIndex} className={styles['date-index']} value={timeIndex}>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+            <textarea placeholder="   + Add Todo" value={text} onChange={changeText} className={styles['add-todo']} />
           </div>
           <ButtonLogo variant="menu" onClick={addTodo}>
             <RiPlayListAddFill size={32} color="white" />
@@ -178,7 +188,9 @@ export const TodoModal = (props: TodoModalProps) => {
                 >
                   <div className={styles['todo-item-modal']}>
                     <Text variant="h2">{getCurrentHour(data.time).value}</Text>
-                    <Text variant="h3" className={styles['time-modal']}>{getCurrentHour(data.time).ampm}</Text>
+                    <Text variant="h3" className={styles['time-modal']}>
+                      {getCurrentHour(data.time).ampm}
+                    </Text>
                     <div className={styles['todo-value']}>
                       {isEditing === data.text && (
                         <textarea
@@ -190,10 +202,16 @@ export const TodoModal = (props: TodoModalProps) => {
                           className={styles['todo-input']}
                         />
                       )}
-                      <Text variant="h2" className={styles[`todo-text-modal${data.done ? '-done' : ''}`]}>{data.text}</Text>
+                      <Text variant="h2" className={styles[`todo-text-modal${data.done ? '-done' : ''}`]}>
+                        {data.text}
+                      </Text>
                     </div>
                     <div className={styles['modal-menu']}>
-                      <ButtonLogo variant="edit" onClick={() => startEditing(data.text)} className={styles['edit-text']}>
+                      <ButtonLogo
+                        variant="edit"
+                        onClick={() => startEditing(data.text)}
+                        className={styles['edit-text']}
+                      >
                         <RiEdit2Fill size={20} color="white" />
                       </ButtonLogo>
                       <Button onClick={() => deleteTodo(data)} variant="delete" className={styles.delete}>

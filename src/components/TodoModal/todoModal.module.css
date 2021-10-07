@@ -106,9 +106,10 @@
   color: white;
   height: 32px;
   width: 100%;
+  margin-left: 16px;
 }
+
 .date-input {
-  appearance: none;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 20px;
   border:none;
@@ -118,15 +119,11 @@
   height: 32px;
   width: 44px;
 }
-.date-input {
-	-moz-appearance: textfield;
-	-webkit-appearance: textfield;
-	appearance: textfield;
-}
 
-.date-input ::-webkit-outer-spin-button,
-.date-input ::-webkit-inner-spin-button {
-	display: none;
+.date-input::-webkit-outer-spin-button,
+.date-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }
 
 .date-index {
@@ -138,6 +135,7 @@
   font-family: inherit;
   line-height: inherit;
   color: white;
+  border-right: 2px solid rgb(59, 59, 59, 1);
 }
 
 .date-index:invalid:not(:focus) {
@@ -147,7 +145,7 @@
   color: blue;
 }
 .date-index:focus option {
-  color:blue;
+  color:black;
 }
 
 .input-header {

@@ -70,6 +70,7 @@ export const DateTodo = (): JSX.Element => {
         onSave={save}
         isOpen={isOpen}
         todos={todos}
+        currentTime={date}
       />
       <div className={styles['time-header']}>
         <Text variant="h5">
