@@ -34,3 +34,16 @@ export const getCurrentDate = (): string => {
 
   return (dateFormat.format(date));
 };
+
+export const changeTime = (
+  hour: number | undefined,
+  min: number | undefined,
+  index: string | undefined,
+  currentTime: Date,
+): number => {
+  const dateHour = hour === 12 ? 0 : hour;
+  const currentHour = dateHour ?? +getCurrentHour(currentTime).value.slice(0, 2);
+  const currentMin = min ?? +getCurrentHour(currentTime).value.slice(3, 5);
+
+  return (new Date().setHours(index === 'AM' ? currentHour : currentHour + 12, currentMin));
+};

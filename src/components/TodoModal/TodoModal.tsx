@@ -13,7 +13,7 @@ import { Button } from '../Button';
 import { Text } from '../Text';
 import { Modal } from '../Modal';
 
-import { getCurrentHour } from '../../utils/time';
+import { getCurrentHour, changeTime } from '../../utils/time';
 
 import { ButtonLogo } from '../ButtonLogo';
 import styles from './todoModal.module.css';
@@ -48,6 +48,9 @@ export const TodoModal = (props: TodoModalProps) => {
   const [hour, setHour] = React.useState<number>();
   const [min, setMin] = React.useState<number>();
   const [timeIndex, setTimeIndex] = React.useState(getCurrentHour(currentTime).ampm);
+  const [todoHour, setTodoHour] = React.useState<number>();
+  const [todoMin, setTodoMin] = React.useState<number>();
+  const [todoTimeIndex, setTodoTimeIndex] = React.useState<string>();
 
   const modalWindowRef = React.useRef<HTMLDivElement>(null);
 
@@ -57,7 +60,7 @@ export const TodoModal = (props: TodoModalProps) => {
     }
   }, [todos, isOpen]);
 
-  const endEditing = () => setIsEditing(false);
+  // const endEditing = () => setIsEditing(false);
   const startEditing = (data: string) => setIsEditing(data);
 
   const changeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,12 +76,8 @@ export const TodoModal = (props: TodoModalProps) => {
 
   const addTodo = () => {
     if (text === '') return;
-    const dateHour = hour === 12 ? 0 : hour;
 
-    const currentHour = dateHour ?? +getCurrentHour(currentTime).value.slice(0, 2);
-    const currentMin = min ?? +getCurrentHour(currentTime).value.slice(3, 5);
-
-    const time = new Date().setHours(timeIndex === 'AM' ? currentHour : currentHour + 12, currentMin);
+    const time = changeTime(hour, min, timeIndex, currentTime);
 
     const newTodo: Todo = {
       id: uuid.v4(),
@@ -121,18 +120,75 @@ export const TodoModal = (props: TodoModalProps) => {
   };
 
   const changeHour = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newHour = +event.currentTarget.value;
+    const newHour = +event.currentTarget.value <= 12 ? +event.currentTarget.value : 12;
     setHour(newHour);
   };
 
   const changeMinutes = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newMinutes = +event.currentTarget.value;
+    const newMinutes = +event.currentTarget.value <= 59 ? +event.currentTarget.value : 59;
     setMin(newMinutes);
   };
 
   const changeTimeIndex = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newTimeIndex = event.currentTarget.value;
     setTimeIndex(newTimeIndex);
+  };
+
+  const changeTodoHour = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newHour = +event.currentTarget.value <= 12 ? +event.currentTarget.value : 12;
+    const time = new Date(changeTime(newHour, todoMin, todoTimeIndex, currentTime));
+
+    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+
+    const newTodo = {
+      ...modalTodos[todoIndex],
+      time,
+      done: false,
+    };
+
+    setModalTodos([
+      ...modalTodos.slice(0, todoIndex),
+      newTodo,
+      ...modalTodos.slice(todoIndex + 1, todos.length),
+    ]);
+    setTodoHour(newHour);
+  };
+
+  const changeTodoMinutes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMinutes = +event.currentTarget.value <= 59 ? +event.currentTarget.value : 59;
+    const time = new Date(changeTime(todoHour, newMinutes, todoTimeIndex, currentTime));
+    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+    const newTodo = {
+      ...modalTodos[todoIndex],
+      time,
+      done: false,
+    };
+
+    setModalTodos([
+      ...modalTodos.slice(0, todoIndex),
+      newTodo,
+      ...modalTodos.slice(todoIndex + 1, todos.length),
+    ]);
+    setTodoMin(newMinutes);
+  };
+
+  const changeTodoTimeIndex = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newTimeIndex = event.currentTarget.value;
+    const time = new Date(changeTime(todoHour, todoMin, newTimeIndex, currentTime));
+    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+    const newTodo = {
+      ...modalTodos[todoIndex],
+      time,
+      done: false,
+    };
+
+    setModalTodos([
+      ...modalTodos.slice(0, todoIndex),
+      newTodo,
+      ...modalTodos.slice(todoIndex + 1, todos.length),
+    ]);
+
+    setTodoTimeIndex(newTimeIndex);
   };
 
   return (
@@ -153,6 +209,7 @@ export const TodoModal = (props: TodoModalProps) => {
               placeholder={getCurrentHour(currentTime).value.slice(0, 2)}
               value={hour ?? ''}
             />
+            <Text variant="h2">:</Text>
             <input
               type="number"
               className={styles['date-input']}
@@ -187,10 +244,39 @@ export const TodoModal = (props: TodoModalProps) => {
                   }}
                 >
                   <div className={styles['todo-item-modal']}>
-                    <Text variant="h2">{getCurrentHour(data.time).value}</Text>
-                    <Text variant="h3" className={styles['time-modal']}>
-                      {getCurrentHour(data.time).ampm}
-                    </Text>
+                    <div className={styles['todo-time']}>
+                      {isEditing === data.text && (
+                        <div className={styles['todo-time-input']}>
+                          <input
+                            type="number"
+                            className={styles['date-input']}
+                            onChange={changeTodoHour}
+                            max={12}
+                            min={0}
+                            placeholder={getCurrentHour(data.time).value.slice(0, 2)}
+                            value={hour ?? ''}
+                          />
+                          <Text variant="h2">:</Text>
+                          <input
+                            type="number"
+                            className={styles['date-input']}
+                            onChange={changeTodoMinutes}
+                            max={59}
+                            min={0}
+                            placeholder={getCurrentHour(data.time).value.slice(3, 5)}
+                            value={min ?? ''}
+                          />
+                          <select onChange={changeTodoTimeIndex} className={styles['date-index']} value={getCurrentHour(data.time).ampm}>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                          </select>
+                        </div>
+                      )}
+                      <Text variant="h2">{getCurrentHour(data.time).value}</Text>
+                      <Text variant="h3" className={styles['time-modal']}>
+                        {getCurrentHour(data.time).ampm}
+                      </Text>
+                    </div>
                     <div className={styles['todo-value']}>
                       {isEditing === data.text && (
                         <textarea
@@ -198,7 +284,7 @@ export const TodoModal = (props: TodoModalProps) => {
                           // eslint-disable-next-line jsx-a11y/no-autofocus
                           autoFocus
                           onKeyDown={editTodo}
-                          onBlur={endEditing}
+                          // onBlur={endEditing}
                           className={styles['todo-input']}
                         />
                       )}
