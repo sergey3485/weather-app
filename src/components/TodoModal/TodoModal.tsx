@@ -97,7 +97,7 @@ export const TodoModal = (props: TodoModalProps) => {
     if (event.key !== 'Enter') return;
 
     if (isEditing !== false) {
-      const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+      const todoIndex = modalTodos.findIndex((item) => item.id === isEditing);
       const newTodo = {
         ...modalTodos[todoIndex],
         text: event.currentTarget.value,
@@ -138,7 +138,7 @@ export const TodoModal = (props: TodoModalProps) => {
     const newHour = +event.currentTarget.value <= 12 ? +event.currentTarget.value : 12;
     const time = new Date(changeTime(newHour, todoMin, todoTimeIndex, currentTime));
 
-    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+    const todoIndex = modalTodos.findIndex((item) => item.id === isEditing);
 
     const newTodo = {
       ...modalTodos[todoIndex],
@@ -157,7 +157,7 @@ export const TodoModal = (props: TodoModalProps) => {
   const changeTodoMinutes = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newMinutes = +event.currentTarget.value <= 59 ? +event.currentTarget.value : 59;
     const time = new Date(changeTime(todoHour, newMinutes, todoTimeIndex, currentTime));
-    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+    const todoIndex = modalTodos.findIndex((item) => item.id === isEditing);
     const newTodo = {
       ...modalTodos[todoIndex],
       time,
@@ -175,7 +175,7 @@ export const TodoModal = (props: TodoModalProps) => {
   const changeTodoTimeIndex = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newTimeIndex = event.currentTarget.value;
     const time = new Date(changeTime(todoHour, todoMin, newTimeIndex, currentTime));
-    const todoIndex = modalTodos.findIndex((item) => item.text === isEditing);
+    const todoIndex = modalTodos.findIndex((item) => item.id === isEditing);
     const newTodo = {
       ...modalTodos[todoIndex],
       time,
@@ -245,7 +245,7 @@ export const TodoModal = (props: TodoModalProps) => {
                 >
                   <div className={styles['todo-item-modal']}>
                     <div className={styles['todo-time']}>
-                      {isEditing === data.text && (
+                      {isEditing === data.id && (
                         <div className={styles['todo-time-input']}>
                           <input
                             type="number"
@@ -278,7 +278,7 @@ export const TodoModal = (props: TodoModalProps) => {
                       </Text>
                     </div>
                     <div className={styles['todo-value']}>
-                      {isEditing === data.text && (
+                      {isEditing === data.id && (
                         <textarea
                           defaultValue={data.text}
                           // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -295,7 +295,7 @@ export const TodoModal = (props: TodoModalProps) => {
                     <div className={styles['modal-menu']}>
                       <ButtonLogo
                         variant="edit"
-                        onClick={() => startEditing(data.text)}
+                        onClick={() => startEditing(data.id)}
                         className={styles['edit-text']}
                       >
                         <RiEdit2Fill size={20} color="white" />
