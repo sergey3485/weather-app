@@ -100,10 +100,16 @@
 
 .todo-time {
   position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: baseline;
 }
 
 .todo-value {
   position: relative;
+  width: 100%;
+  margin-left: 8px;
+  display: flex;
 }
 
 .time-modal{
@@ -134,7 +140,6 @@
   border:none;
   outline: none;
   background: none;
-  height: 32px;
   width: 26px;
   color: white;
 }
@@ -154,7 +159,6 @@
   font-family: inherit;
   line-height: inherit;
   color: white;
-  border-right: 2px solid rgb(59, 59, 59, 1);
 }
 
 .date-index:invalid:not(:focus) {
@@ -182,4 +186,9 @@
   display: flex;
   margin-top: 16px;
   align-items: center;
+}
+
+.time-input {
+  display: flex;
+  border-right: 2px solid rgb(59, 59, 59, 1);
 }

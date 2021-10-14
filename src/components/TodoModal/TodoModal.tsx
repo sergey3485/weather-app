@@ -199,29 +199,31 @@ export const TodoModal = (props: TodoModalProps) => {
         <Text variant="h1">Todo`s editor</Text>
         <div className={styles['add-header']}>
           <div className={styles['input-header']}>
-            <input
-              type="number"
-              className={styles['date-input']}
-              onChange={changeHour}
-              max={12}
-              min={0}
-              placeholder={getCurrentHour(currentTime).value.slice(0, 2)}
-              value={hour ?? ''}
-            />
-            <Text variant="h2">:</Text>
-            <input
-              type="number"
-              className={styles['date-input']}
-              onChange={changeMinutes}
-              max={59}
-              min={0}
-              placeholder={getCurrentHour(currentTime).value.slice(3, 5)}
-              value={min ?? ''}
-            />
-            <select onChange={changeTimeIndex} className={styles['date-index']} value={timeIndex}>
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
-            </select>
+            <div className={styles['time-input']}>
+              <input
+                type="number"
+                className={styles['date-input']}
+                onChange={changeHour}
+                max={12}
+                min={0}
+                placeholder={getCurrentHour(currentTime).value.slice(0, 2)}
+                value={hour ?? ''}
+              />
+              <Text variant="h2">:</Text>
+              <input
+                type="number"
+                className={styles['date-input']}
+                onChange={changeMinutes}
+                max={59}
+                min={0}
+                placeholder={getCurrentHour(currentTime).value.slice(3, 5)}
+                value={min ?? ''}
+              />
+              <select onChange={changeTimeIndex} className={styles['date-index']} value={timeIndex}>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
             <textarea placeholder="   + Add Todo" value={text} onChange={changeText} className={styles['add-todo']} />
           </div>
           <ButtonLogo variant="menu" onClick={addTodo}>
