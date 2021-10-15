@@ -191,4 +191,6 @@
 .time-input {
   display: flex;
   border-right: 2px solid rgb(59, 59, 59, 1);
+  align-items: baseline;
 }
+
