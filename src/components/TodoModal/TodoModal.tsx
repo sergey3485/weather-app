@@ -209,7 +209,7 @@ export const TodoModal = (props: TodoModalProps) => {
                 placeholder={getCurrentHour(currentTime).value.slice(0, 2)}
                 value={hour ?? ''}
               />
-              <Text variant="h2">:</Text>
+              <Text variant="h" className={styles.gap}>:</Text>
               <input
                 type="number"
                 className={styles['date-input']}
@@ -257,7 +257,7 @@ export const TodoModal = (props: TodoModalProps) => {
                             placeholder={getCurrentHour(data.time).value.slice(0, 2)}
                             value={todoHour ?? ''}
                           />
-                          <Text variant="h2">:</Text>
+                          <Text variant="h3" className={styles.gap}>:</Text>
                           <input
                             type="number"
                             className={styles['date-input']}
