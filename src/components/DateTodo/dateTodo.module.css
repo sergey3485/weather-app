@@ -72,3 +72,8 @@
 .time {
   margin-right: 16px;
 }
+
+.time-header {
+  display: flex;
+  align-items: baseline;
+}

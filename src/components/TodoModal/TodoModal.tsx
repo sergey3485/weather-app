@@ -60,8 +60,13 @@ export const TodoModal = (props: TodoModalProps) => {
     }
   }, [todos, isOpen]);
 
-  // const endEditing = () => setIsEditing(false);
-  const startEditing = (data: string) => setIsEditing(data);
+  const endEditing = () => setIsEditing(false);
+  const startEditing = (data: string) => {
+    setIsEditing(data);
+    setTodoHour(undefined);
+    setTodoMin(undefined);
+    setTodoTimeIndex(undefined);
+  };
 
   const changeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.currentTarget.value;
@@ -110,7 +115,10 @@ export const TodoModal = (props: TodoModalProps) => {
         ...modalTodos.slice(todoIndex + 1, todos.length),
       ]);
 
-      setIsEditing(false);
+      endEditing();
+      setTodoHour(undefined);
+      setTodoMin(undefined);
+      setTodoTimeIndex(undefined);
     }
   };
 
@@ -190,6 +198,14 @@ export const TodoModal = (props: TodoModalProps) => {
     ]);
   };
 
+  const endChanging = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    endEditing();
+    // setTodoHour(undefined);
+    // setTodoMin(undefined);
+    // setTodoTimeIndex(undefined);
+  };
+
   return (
     <Modal modalContentRef={modalWindowRef} open={isOpen} onClose={onClose}>
       <div className={styles['modal-container']} ref={modalWindowRef}>
@@ -244,7 +260,7 @@ export const TodoModal = (props: TodoModalProps) => {
                     exitActive: styles['animation-todo-item-exit-active'],
                   }}
                 >
-                  <div className={styles['todo-item-modal']}>
+                  <form className={styles['todo-item-modal']} onSubmit={endChanging}>
                     <div className={styles['todo-time']}>
                       {isEditing === data.id && (
                         <div className={styles['todo-time-input']}>
@@ -305,7 +321,7 @@ export const TodoModal = (props: TodoModalProps) => {
                         <RiDeleteBinLine size={20} color="white" />
                       </Button>
                     </div>
-                  </div>
+                  </form>
                 </CSSTransition>
               );
             })}

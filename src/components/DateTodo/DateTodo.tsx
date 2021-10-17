@@ -73,11 +73,17 @@ export const DateTodo = (): JSX.Element => {
         currentTime={date}
       />
       <div className={styles['time-header']}>
-        <Text variant="h5">
-          <strong>{getCurrentHour(date).value}</strong>
+        <Text variant="h5" component="strong">
+          {getCurrentHour(date).value.slice(0, 2)}
         </Text>
-        <Text variant="text">
-          <strong>{getCurrentHour(date).ampm}</strong>
+        <Text variant="h2" component="strong" style={{ alignSelf: 'center' }}>
+          :
+        </Text>
+        <Text variant="h5" component="strong">
+          {getCurrentHour(date).value.slice(3, 5)}
+        </Text>
+        <Text variant="text" component="strong">
+          {getCurrentHour(date).ampm}
         </Text>
       </div>
       <Text variant="date-day">{getCurrentDate()}</Text>

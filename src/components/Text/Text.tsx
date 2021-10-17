@@ -5,6 +5,7 @@ import styles from './text.module.css';
 export interface TextProprs extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode,
   variant: string,
+  component?: React.ElementType,
 }
 
 export const Text = (props: TextProprs) => {
@@ -12,11 +13,14 @@ export const Text = (props: TextProprs) => {
     children,
     variant,
     className = '',
+    component,
     ...other
   } = props;
+
+  const Component = component ?? 'span';
   return (
-    <span className={`${styles.text} ${styles[variant]} ${className}`} {...other}>
+    <Component className={`${styles.text} ${styles[variant]} ${className}`} {...other}>
       {children}
-    </span>
+    </Component>
   );
 };
